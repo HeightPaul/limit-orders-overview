@@ -1,0 +1,13 @@
+
+{
+   "1": {
+      "name": "Ethereum",
+      "scanUrl": "https://etherscan.io",
+      "rpcUrl": "https://rpc.ankr.com/eth"
+   },
+   "137": {
+      "name": "Polygon",
+      "scanUrl": "https://polygonscan.com",
+      "rpcUrl": "https://polygon-rpc.com"
+   }
+}

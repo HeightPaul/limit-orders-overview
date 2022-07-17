@@ -1,0 +1,17 @@
+{
+   "name": "limit-orders-overview",
+   "version": "0.0.1",
+   "description": "Limit Orders",
+   "main": "index.js",
+   "scripts": {
+      "lint": "npx eslint . --ext .js",
+      "lint-fix": "npx eslint . --ext .js --fix"
+   },
+   "author": "HP",
+   "license": "ISC",
+   "devDependencies": {
+      "@babel/eslint-parser": "^7.18.2",
+      "@babel/plugin-syntax-import-assertions": "^7.18.6",
+      "eslint": "^8.20.0"
+   }
+}
