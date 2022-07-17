@@ -1,21 +1,25 @@
 import chains from '../../configs/chains.json' assert {type: 'json'};
 import {formatToken} from '../../contracts/units/index.js';
 
-function maker(maker, chainId){
-   return `<td class="w-25"><a target="_blank" href="${chains[chainId].scanUrl}/address/${maker}" class="link-success">${maker}</a></td>`;
+function maker(tokenAddress, balance, maker, chainId, tokensInfo){
+   const configToken = tokensInfo[tokenAddress];
+   return `
+      <td class="w-25">
+         <a target="_blank" href="${chains[chainId].scanUrl}/address/${maker}" class="link-light">${maker}</a>
+         <div>${parseFloat(formatToken(balance, configToken.decimals)).toPrecision(8)} <span class="text-light">${configToken.symbol}</span></div>
+      </td>
+   `;
 }
 
 function asset(tokenAddress, amount, chainId, tokensInfo) {
-   tokenAddress = tokenAddress.toLowerCase();
-
    const configToken = tokensInfo[tokenAddress];
    return `
       <td>
          <div class="d-flex flex-wrap">
-            <div><img class="tokenIcon m-1" src="https://tokens.1inch.io/${tokenAddress}.png" alt="CT"/></div>
+            <div><img class="tokenIcon m-1" src="${configToken.imageUrl}" alt="CT"/></div>
             <div>
-               <div><a target="_blank" href="${chains[chainId].scanUrl}/address/${tokenAddress}" class="link-success">${configToken?.symbol}</a></div>
-               <div>${parseFloat(formatToken(amount, configToken?.decimals)).toPrecision(8)}</div>
+               <div><a target="_blank" href="${chains[chainId].scanUrl}/address/${tokenAddress}" class="link-light">${configToken.symbol}</a></div>
+               <div>${parseFloat(formatToken(amount, configToken.decimals)).toPrecision(8)}</div>
             </div>
          </div>
       </td>

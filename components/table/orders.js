@@ -1,7 +1,7 @@
 import {getValue} from '../form/fill.js';
 import {getStatuses, getLimitOrdersUrl, getLocaleDateTime} from '../../configs/index.js';
-import {maker, asset, rates} from '../cell/index.js';
 import {getTokensInfo} from '../../contracts/index.js';
+import {maker, asset, rates} from '../cell/index.js';
 
 const EMPTY_STRING_JOIN = '';
 
@@ -18,22 +18,20 @@ export async function ordersTable(){
       chainId: getValue('chainId'),
       statuses: getStatuses(document.querySelector('#statuses').options)
    };
-
    const response = await fetch(getLimitOrdersUrl(fields));
-   const responseData = await response.json();
+   const json = await response.json();
 
-   if(responseData.error){
-      ordersElement.innerHTML = `${responseData.statusCode ?? 'Failed'}: ${responseData.error}`;
-
+   if(json.error){
+      ordersElement.innerHTML = `${json.statusCode ?? 'Failed'}: ${json.error}`;
       return Promise.reject('failed');
    }
 
-   const tokensInfo = await getTokensInfo(responseData, fields.chainId);
+   const tokensInfo = await getTokensInfo(json, fields.chainId);
    const table = `
     <table class="table table-striped table-dark">
       <thead class="thead-dark">
          <tr>
-            <th scope="col">Address</th>
+            <th scope="col">Address|Balance</th>
             <th scope="col">Sell</th>
             <th scope="col">Buy</span></th>
             <th scope="col">Order Rates</th>
@@ -41,9 +39,9 @@ export async function ordersTable(){
          </tr>
       </thead>
       <tbody>
-         ${responseData.map(order=> `
+         ${json.map(order=> `
          <tr>
-            ${maker(order.data.maker, fields.chainId)}
+            ${maker(order.data.makerAsset, order.makerBalance, order.data.maker, fields.chainId, tokensInfo)}
             ${asset(order.data.makerAsset, order.data.makingAmount, fields.chainId, tokensInfo)}
             ${asset(order.data.takerAsset, order.data.takingAmount, fields.chainId, tokensInfo)}
             ${rates(order)}
@@ -54,7 +52,6 @@ export async function ordersTable(){
     </table>
   `;
    ordersElement.innerHTML = table;
-   ordersCountElement.textContent = `Found: ${responseData.length}`;
-
+   ordersCountElement.textContent = `Found: ${json.length}`;
    return Promise.resolve('rendered');
 }
