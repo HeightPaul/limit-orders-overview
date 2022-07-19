@@ -2,14 +2,17 @@ import {getValue} from '../form/fill.js';
 import {getStatuses, getLimitOrdersUrl, getLocaleDateTime} from '../../configs/index.js';
 import {getTokensInfo} from '../../contracts/index.js';
 import {maker, asset, rates} from '../cell/index.js';
+import chains from '../../configs/chains.json' assert {type: 'json'};
+import {interactive} from './interactive.js';
 
 const EMPTY_STRING_JOIN = '';
 
-export async function ordersTable(){
-   const ordersElement = document.querySelector('#orders');
-   const ordersCountElement = document.querySelector('#ordersCount');
-   ordersElement.innerHTML = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
-   ordersCountElement.textContent = '';
+export async function loadTable(){
+   const animation = document.querySelector('#animation');
+   const ordersSection = document.querySelector('#ordersSection');
+   const ordersCount = document.querySelector('#ordersCount');
+   animation.innerHTML = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
+   ordersSection.textContent = ordersCount.textContent ='';
 
    const fields = {
       makerAsset: getValue('makerAsset'),
@@ -22,28 +25,30 @@ export async function ordersTable(){
    const json = await response.json();
 
    if(json.error){
-      ordersElement.innerHTML = `${json.statusCode ?? 'Failed'}: ${json.error}`;
+      ordersSection.innerHTML = `${json.statusCode ?? 'Failed'}: ${json.error}`;
+      animation.innerHTML = '';
       return Promise.reject('failed');
    }
 
    const tokensInfo = await getTokensInfo(json, fields.chainId);
+   const chain = chains[fields.chainId];
    const table = `
-    <table class="table table-striped table-dark">
-      <thead class="thead-dark">
-         <tr>
-            <th scope="col">Address|Balance</th>
-            <th scope="col">Sell</th>
-            <th scope="col">Buy</span></th>
-            <th scope="col">Order Rates</th>
-            <th scope="col">Created</th>
-         </tr>
-      </thead>
-      <tbody>
+      <table class="table table-striped table-dark" id="ordersTable">
+         <thead class="thead-dark">
+            <tr>
+               <th scope="col">Address|Balance</th>
+               <th scope="col">Sell</th>
+               <th scope="col">Buy</span></th>
+               <th scope="col">Order Rates</th>
+               <th scope="col">Created</th>
+            </tr>
+         </thead>
+         <tbody>
          ${json.map(order=> `
          <tr>
-            ${maker(order.data.makerAsset, order.makerBalance, order.data.maker, fields.chainId, tokensInfo)}
-            ${asset(order.data.makerAsset, order.data.makingAmount, fields.chainId, tokensInfo)}
-            ${asset(order.data.takerAsset, order.data.takingAmount, fields.chainId, tokensInfo)}
+            ${maker(order.data.makerAsset, order.makerBalance, order.data.maker, chain, tokensInfo)}
+            ${asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo)}
+            ${asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo)}
             ${rates(order)}
             <td>${getLocaleDateTime(order.createDateTime)}</td>
          </tr>
@@ -51,7 +56,10 @@ export async function ordersTable(){
       </tbody>
     </table>
   `;
-   ordersElement.innerHTML = table;
-   ordersCountElement.textContent = `Found: ${json.length}`;
+
+   ordersSection.innerHTML = table;
+   ordersCount.textContent = `Found: ${json.length}`;
+   animation.innerHTML = '';
+   interactive();
    return Promise.resolve('rendered');
 }
