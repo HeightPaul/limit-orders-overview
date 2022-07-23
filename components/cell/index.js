@@ -5,7 +5,10 @@ function maker(tokenAddress, balance, makerAddress, chain, tokensInfo) {
    return `
       <td class="w-25">
          <a target="_blank" href="${chain.scanUrl}/address/${makerAddress}" class="coloredAddress" onload="wazup()">${makerAddress}</a>
-         <div>${parseFloat(formatToken(balance, configToken.decimals)).toPrecision(8)} <span class="text-light">${configToken.symbol}</span></div>
+            <div>
+               <span class="balanceAmount">${parseFloat(formatToken(balance, configToken.decimals)).toPrecision(8)}</span>
+               <span class="text-light">${configToken.symbol}</span>
+            </div>
       </td>
    `;
 }

@@ -8,6 +8,15 @@ async function getTokensInfo(orders, chain) {
    return await addImageUrls(addAddressKeys(nestedTokensInfo), chain);
 }
 
+function getUniqueTokens(orders) {
+   const tokenAddressesArray = [];
+   orders.forEach(order => {
+      tokenAddressesArray.push(order.data.makerAsset);
+      tokenAddressesArray.push(order.data.takerAsset);
+   });
+   return Array.from(new Set(tokenAddressesArray));
+}
+
 async function getTokenAbiInfo(address, provider) {
    const tokenAbi = [
       'function symbol() view returns (string)',
@@ -19,15 +28,6 @@ async function getTokenAbiInfo(address, provider) {
       symbol: await tokenContract.symbol(),
       decimals: Number(await tokenContract.decimals())
    };
-}
-
-function getUniqueTokens(orders) {
-   const tokenAddressesArray = [];
-   orders.forEach(order => {
-      tokenAddressesArray.push(order.data.makerAsset);
-      tokenAddressesArray.push(order.data.takerAsset);
-   });
-   return Array.from(new Set(tokenAddressesArray));
 }
 
 function addAddressKeys(nestedTokensInfo) {

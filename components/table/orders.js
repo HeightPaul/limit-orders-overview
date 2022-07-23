@@ -11,8 +11,11 @@ export async function loadTable() {
    const animation = document.querySelector('#animation');
    const ordersSection = document.querySelector('#ordersSection');
    const ordersCount = document.querySelector('#ordersCount');
+   const popEmptyBalancesBtn = document.querySelector('#popEmptyBalances');
    animation.innerHTML = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
-   ordersSection.textContent = ordersCount.textContent ='';
+   ordersSection.textContent = ordersCount.textContent = '';
+   popEmptyBalancesBtn.style.display = 'none';
+   popEmptyBalancesBtn.innerText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
 
    const fields = {
       makerAsset: getValue('makerAsset'),
@@ -57,10 +60,10 @@ export async function loadTable() {
     </table>
   `;
 
-   ordersSection.innerHTML = table;
-   ordersCount.textContent = `Found: ${json.length}`;
    animation.innerHTML = '';
-   dataTable();
+   ordersSection.innerHTML = table;
+   const ordersDataTable = dataTable(popEmptyBalancesBtn);
+   ordersCount.textContent = `Found: ${json.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`;
    brighter();
    return Promise.resolve('rendered');
 }

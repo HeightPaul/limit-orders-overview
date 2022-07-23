@@ -1,10 +1,53 @@
 /* eslint-disable no-undef */
-function dataTable() {
+function dataTable(popEmptyBalancesBtn) {
    new simpleDatatables.DataTable('#ordersTable', {
       searchable: true,
-      perPage: 50,
-      perPageSelect: [50, 100]
+      perPage: 100,
+      perPageSelect: [100]
    });
+
+   const emptyRowsLength = getEmptyRows().length;
+   if(emptyRowsLength) {
+      popEmptyBalancesBtn.style.display = '';
+   }
+
+   return {emptyRowsLength: emptyRowsLength};
+}
+
+function toggleEmptyBalances() {
+   const emptyRows = getEmptyRows();
+   if(emptyRows.length) {
+      const showEmpty = this.innerText === '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
+      this.innerText = showEmpty ? '🏳️' : '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
+      emptyRows.forEach(emptyRow => {
+         emptyRow.style.display = showEmpty ? '' : 'none';
+      });
+   }
+}
+
+function brighter() {
+   document.querySelectorAll('.coloredAddress').forEach(address => {
+      address.style.color = d3.color(`#${getSixDigits(address.innerText)}`).brighter(6);
+   });
+}
+
+function getEmptyRows() {
+   let isEmptyAnyBalance = false;
+   const emptyRows = [];
+   [...document.querySelectorAll('.balanceAmount')]
+      .filter(amount => {
+         const isEmptyBalance = Number(amount.innerText) === 0;
+         if(!isEmptyAnyBalance && isEmptyBalance) {
+            isEmptyAnyBalance = true;
+         }
+         return isEmptyBalance;
+      })
+      .forEach(amount => {
+         const emptyRow = amount.closest('tr');
+         emptyRow.style.display = 'none';
+         emptyRows.push(emptyRow);
+      });
+   return emptyRows;
 }
 
 function getSixDigits(address) {
@@ -12,10 +55,4 @@ function getSixDigits(address) {
    return string.slice(2,8);
 }
 
-function brighter() {
-   document.querySelectorAll('.coloredAddress').forEach((address) => {
-      address.style.color = d3.color(`#${getSixDigits(address.innerText)}`).brighter(6);
-   });
-}
-
-export{dataTable, brighter};
+export{dataTable, toggleEmptyBalances, brighter};
