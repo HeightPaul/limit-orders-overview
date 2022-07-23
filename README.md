@@ -1,7 +1,11 @@
-# 1Inch Limit Orders
+# 🦄 1Inch Limit Orders
 Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 
-## Steps to start the project
+## 🌾 Supports
+- Maker and taker token addresses search
+- Single and not-specified (multiple) addresses' orders
+
+## 👣 First steps
 1. Install `NodeJS` and `NPM`.
 2. Install packages: `npm install`.*
 3. Run basic server: `npx http-server`.
