@@ -3,7 +3,7 @@ import {getStatuses, getLimitOrdersUrl, getLocaleDateTime} from '../../configs/i
 import {getTokensInfo} from '../../contracts/index.js';
 import {maker, asset, rates} from '../cell/index.js';
 import chains from '../../configs/chains.json' assert {type: 'json'};
-import {interactive} from './interactive.js';
+import {dataTable, brighter} from './interactive.js';
 
 const EMPTY_STRING_JOIN = '';
 
@@ -30,8 +30,8 @@ export async function loadTable(){
       return Promise.reject('failed');
    }
 
-   const tokensInfo = await getTokensInfo(json, fields.chainId);
    const chain = chains[fields.chainId];
+   const tokensInfo = await getTokensInfo(json, chain);
    const table = `
       <table class="table table-striped table-dark" id="ordersTable">
          <thead class="thead-dark">
@@ -60,6 +60,7 @@ export async function loadTable(){
    ordersSection.innerHTML = table;
    ordersCount.textContent = `Found: ${json.length}`;
    animation.innerHTML = '';
-   interactive();
+   dataTable();
+   brighter();
    return Promise.resolve('rendered');
 }

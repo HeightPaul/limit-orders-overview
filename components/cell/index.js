@@ -4,13 +4,13 @@ function maker(tokenAddress, balance, makerAddress, chain, tokensInfo){
    const configToken = tokensInfo[tokenAddress];
    return `
       <td class="w-25">
-         <a target="_blank" href="${chain.scanUrl}/address/${makerAddress}" class="link-secondary">${makerAddress}</a>
+         <a target="_blank" href="${chain.scanUrl}/address/${makerAddress}" class="coloredAddress" onload="wazup()">${makerAddress}</a>
          <div>${parseFloat(formatToken(balance, configToken.decimals)).toPrecision(8)} <span class="text-light">${configToken.symbol}</span></div>
       </td>
    `;
 }
 
-function asset(tokenAddress, amount, chain, tokensInfo) {
+function asset(tokenAddress, amount, chain, tokensInfo){
    const configToken = tokensInfo[tokenAddress];
    return `
       <td>
@@ -29,8 +29,8 @@ function rates(order){
    return `
       <td>
          <div>
-            <div>${Number(order.makerRate).toPrecision(4)}</div>
-            <div class="text-secondary">${Number(order.takerRate).toPrecision(4)}</div>
+            <div>${parseFloat(order.makerRate).toPrecision(4)}</div>
+            <div class="text-secondary">${parseFloat(order.takerRate).toPrecision(4)}</div>
          </div>
       </td>
    `;

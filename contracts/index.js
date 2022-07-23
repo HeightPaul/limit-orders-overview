@@ -1,15 +1,14 @@
 /* eslint-disable no-undef */
-import chains from '../configs/chains.json' assert { type: 'json' };
+const ZAPPER_FI_URL = 'https://storage.googleapis.com/zapper-fi-assets/tokens';
 
-async function getTokensInfo(orders, chainId){
-   const rpcUrl = chains[chainId].rpcUrl;
-   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+async function getTokensInfo(orders, chain){
+   const provider = new ethers.providers.JsonRpcProvider(chain.rpcUrl);
    const addresses = getUniqueTokens(orders);
-   const nestedTokensInfo = await Promise.all(addresses.map(async(address)=> await getTokenInfo(address, provider)));
-   return await addImageUrls(addAddressKeys(nestedTokensInfo), chainId);
+   const nestedTokensInfo = await Promise.all(addresses.map(async(address) => await getTokenAbiInfo(address, provider)));
+   return await addImageUrls(addAddressKeys(nestedTokensInfo), chain);
 }
 
-async function getTokenInfo(address, provider){
+async function getTokenAbiInfo(address, provider){
    const tokenAbi = [
       'function symbol() view returns (string)',
       'function decimals() view returns (uint)'
@@ -41,12 +40,11 @@ function addAddressKeys(nestedTokensInfo){
    return tokensInfo;
 }
 
-async function addImageUrls(tokensInfo, chainId){
+async function addImageUrls(tokensInfo, chain){
    for(const tokenAddress in tokensInfo){
-      const response = await fetch(`https://tokens.1inch.io/${tokenAddress}.png`);
-      tokensInfo[tokenAddress].imageUrl = response.ok
-         ? `https://tokens.1inch.io/${tokenAddress}.png`
-         : `${chains[chainId].scanUrl}/images/main/empty-token.png`;
+      const tokenUrl =`${ZAPPER_FI_URL}/${chain.name}/${tokenAddress}.png`;
+      const response = await fetch(tokenUrl);
+      tokensInfo[tokenAddress].imageUrl = response.ok ? tokenUrl : `${chain.scanUrl}/images/main/empty-token.png`;
    }
    return tokensInfo;
 }
