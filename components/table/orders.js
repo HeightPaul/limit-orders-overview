@@ -7,7 +7,7 @@ import {dataTable, brighter} from './interactive.js';
 
 const EMPTY_STRING_JOIN = '';
 
-export async function loadTable(){
+export async function loadTable() {
    const animation = document.querySelector('#animation');
    const ordersSection = document.querySelector('#ordersSection');
    const ordersCount = document.querySelector('#ordersCount');
@@ -24,7 +24,7 @@ export async function loadTable(){
    const response = await fetch(getLimitOrdersUrl(fields));
    const json = await response.json();
 
-   if(json.error){
+   if(json.error) {
       ordersSection.innerHTML = `${json.statusCode ?? 'Failed'}: ${json.error}`;
       animation.innerHTML = '';
       return Promise.reject('failed');

@@ -24,6 +24,7 @@ module.exports = {
       'object-curly-spacing': ['error', 'never'],
       'array-bracket-spacing': ['error', 'never'],
       'key-spacing': ['error', {'beforeColon': false}],
+      'space-before-blocks': ['error', 'always'],
       'eol-last': ['error', 'always'],
    }
 };

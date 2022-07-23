@@ -1,7 +1,7 @@
 import {fillInput, setUrlParam} from './fill.js';
 import {getStatuses} from '../../configs/index.js';
 
-function fillFormBySearchParams(){
+function fillFormBySearchParams() {
    const urlParams = new URLSearchParams(window.location.search);
    fillWalletAddress(urlParams);
    fillInput(urlParams, 'makerAsset');
@@ -16,16 +16,16 @@ function fillFormBySearchParams(){
    }
 }
 
-function fillWalletAddress(urlParams){
+function fillWalletAddress(urlParams) {
    const walletAddress = fillInput(urlParams, 'walletAddress');
-   if(!walletAddress){
+   if(!walletAddress) {
       document.querySelector('#allAddresses').checked = true;
       changeOnAllAddresses();
    }
    document.title += ` - ${walletAddress ?? 'All'}`;
 }
 
-function sendPageSearchParamsByForm(){
+function sendPageSearchParamsByForm() {
    const urlParams = new URLSearchParams(window.location.search);
    document.querySelectorAll('.form-control').forEach(field => {
       urlParams.delete(field.id);
@@ -39,13 +39,13 @@ function sendPageSearchParamsByForm(){
    window.history.pushState(null, null, `?${urlParams}`);
 }
 
-function clearForm(){
+function clearForm() {
    document.querySelectorAll('.form-control').forEach(field => {
       field.value = '';
    });
 }
 
-function changeOnAllAddresses(){
+function changeOnAllAddresses() {
    document.querySelector('#walletAddressGroup').classList.toggle('d-none');
    document.querySelector('#walletAddress').value = '';
 }

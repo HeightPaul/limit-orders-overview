@@ -1,6 +1,6 @@
-function fillInput(urlParams, inputId){
+function fillInput(urlParams, inputId) {
    const fieldSearch = urlParams.get(inputId);
-   if(inputId){
+   if(inputId) {
       document.querySelector(`#${inputId}`).value = fieldSearch;
    }
    return fieldSearch;
@@ -13,7 +13,7 @@ function setUrlParam(urlParams, inputId) {
    }
 }
 
-function getValue(inputId){
+function getValue(inputId) {
    return document.querySelector(`#${inputId}`)?.value;
 }
 

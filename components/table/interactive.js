@@ -7,7 +7,7 @@ function dataTable() {
    });
 }
 
-function getSixDigits(address){
+function getSixDigits(address) {
    const string = Math.floor(100000 + address * 900000).toString();
    return string.slice(2,8);
 }

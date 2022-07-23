@@ -1,6 +1,6 @@
 import {formatToken} from '../../contracts/units/index.js';
 
-function maker(tokenAddress, balance, makerAddress, chain, tokensInfo){
+function maker(tokenAddress, balance, makerAddress, chain, tokensInfo) {
    const configToken = tokensInfo[tokenAddress];
    return `
       <td class="w-25">
@@ -10,7 +10,7 @@ function maker(tokenAddress, balance, makerAddress, chain, tokensInfo){
    `;
 }
 
-function asset(tokenAddress, amount, chain, tokensInfo){
+function asset(tokenAddress, amount, chain, tokensInfo) {
    const configToken = tokensInfo[tokenAddress];
    return `
       <td>
@@ -25,7 +25,7 @@ function asset(tokenAddress, amount, chain, tokensInfo){
   `;
 }
 
-function rates(order){
+function rates(order) {
    return `
       <td>
          <div>

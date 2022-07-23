@@ -7,6 +7,6 @@ document.querySelector('#sendPageSearchParams').addEventListener('click', sendPa
 document.querySelector('#clearForm').addEventListener('click', clearForm);
 
 fillFormBySearchParams();
-if(location.search){
+if(location.search) {
    document.querySelector('#checkBtn').click();
 }
