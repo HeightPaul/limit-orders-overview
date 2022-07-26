@@ -27,7 +27,8 @@ function toggleEmptyBalances() {
 
 function brighter() {
    document.querySelectorAll('.coloredAddress').forEach(address => {
-      address.style.color = d3.color(`#${getSixDigits(address.innerText)}`).brighter(6);
+      const hexNumber = address.innerText.slice(0, -3);
+      address.style.color = d3.color(`#${getSixDigits(hexNumber)}`).brighter(6);
    });
 }
 
@@ -50,9 +51,9 @@ function getEmptyRows() {
    return emptyRows;
 }
 
-function getSixDigits(address) {
-   const string = Math.floor(100000 + address * 900000).toString();
-   return string.slice(2,8);
+function getSixDigits(number) {
+   const string = Math.floor(100000 + number * 900000).toString();
+   return string.slice(2, 8);
 }
 
 export{dataTable, toggleEmptyBalances, brighter};

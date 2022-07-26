@@ -49,10 +49,10 @@ export async function loadTable() {
          <tbody>
          ${json.map(order=> `
          <tr>
-            ${maker(order.data.makerAsset, order.makerBalance, order.data.maker, chain, tokensInfo)}
-            ${asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo)}
-            ${asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo)}
-            ${rates(order)}
+            ${maker(order.data.maker, order.makerBalance, chain, tokensInfo[order.data.makerAsset])}
+            ${asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo[order.data.makerAsset])}
+            ${asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo[order.data.takerAsset])}
+            ${rates(order, tokensInfo)}
             <td>${getLocaleDateTime(order.createDateTime)}</td>
          </tr>
          `).join(EMPTY_STRING_JOIN)}

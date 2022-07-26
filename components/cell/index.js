@@ -1,39 +1,39 @@
 import {formatToken} from '../../contracts/units/index.js';
 
-function maker(tokenAddress, balance, makerAddress, chain, tokensInfo) {
-   const configToken = tokensInfo[tokenAddress];
+function maker(makerWalletAddress, balance, chain, tokenInfo) {
    return `
-      <td class="w-25">
-         <a target="_blank" href="${chain.scanUrl}/address/${makerAddress}" class="coloredAddress" onload="wazup()">${makerAddress}</a>
-            <div>
-               <span class="balanceAmount">${parseFloat(formatToken(balance, configToken.decimals)).toPrecision(8)}</span>
-               <span class="text-light">${configToken.symbol}</span>
-            </div>
+      <td>
+         <a target="_blank" href="${chain.scanUrl}/address/${makerWalletAddress}" class="coloredAddress">${makerWalletAddress.slice(0, 21)}...</a>
+         <div>
+            <span class="balanceAmount">${parseFloat(formatToken(balance, tokenInfo.decimals)).toPrecision(8)}</span>
+            <span class="text-light">${tokenInfo.symbol}</span>
+         </div>
       </td>
    `;
 }
 
-function asset(tokenAddress, amount, chain, tokensInfo) {
-   const configToken = tokensInfo[tokenAddress];
+function asset(tokenAddress, amount, chain, tokenInfo) {
    return `
       <td>
          <div class="d-flex flex-wrap">
-            <div><img class="tokenIcon m-1" src="${configToken.imageUrl}" alt="CT"/></div>
+            <div><img class="tokenIcon m-1" src="${tokenInfo.imageUrl}" alt="CT"/></div>
             <div>
-               <div><a target="_blank" href="${chain.scanUrl}/address/${tokenAddress}" class="link-secondary">${configToken.symbol}</a></div>
-               <div>${parseFloat(formatToken(amount, configToken.decimals)).toPrecision(8)}</div>
+               <div><a target="_blank" href="${chain.scanUrl}/address/${tokenAddress}" class="link-secondary">${tokenInfo.symbol}</a></div>
+               <div>${parseFloat(formatToken(amount, tokenInfo.decimals)).toPrecision(8)}</div>
             </div>
          </div>
       </td>
   `;
 }
 
-function rates(order) {
+function rates(order, tokensInfo) {
+   const formattedMakerAmount = parseFloat(formatToken(order.data.makingAmount, tokensInfo[order.data.makerAsset].decimals));
+   const formattedTakerAmount = parseFloat(formatToken(order.data.takingAmount, tokensInfo[order.data.takerAsset].decimals));
    return `
       <td>
          <div>
-            <div>${parseFloat(order.makerRate).toPrecision(4)}</div>
-            <div class="text-secondary">${parseFloat(order.takerRate).toPrecision(4)}</div>
+            <div>${(formattedTakerAmount / formattedMakerAmount).toFixed(5)}</div>
+            <div class="text-secondary">${(formattedMakerAmount / formattedTakerAmount).toFixed(5)}</div>
          </div>
       </td>
    `;
