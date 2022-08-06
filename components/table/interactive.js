@@ -33,15 +33,10 @@ function brighter() {
 }
 
 function getEmptyRows() {
-   let isEmptyAnyBalance = false;
    const emptyRows = [];
    [...document.querySelectorAll('.balanceAmount')]
       .filter(amount => {
-         const isEmptyBalance = Number(amount.innerText) === 0;
-         if(!isEmptyAnyBalance && isEmptyBalance) {
-            isEmptyAnyBalance = true;
-         }
-         return isEmptyBalance;
+         return Number(amount.innerText) === 0;
       })
       .forEach(amount => {
          const emptyRow = amount.closest('tr');
@@ -52,8 +47,8 @@ function getEmptyRows() {
 }
 
 function getSixDigits(number) {
-   const string = Math.floor(100000 + number * 900000).toString();
-   return string.slice(2, 8);
+   const digitsAsString = Math.floor(100000 + number * 900000).toString();
+   return digitsAsString.slice(2, 8);
 }
 
 export{dataTable, toggleEmptyBalances, brighter};
