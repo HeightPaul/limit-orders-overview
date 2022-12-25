@@ -1,5 +1,5 @@
 import {getValue} from '../form/fill.js';
-import {getStatuses, getLimitOrdersUrl, getLocaleDateTime} from '../../configs/index.js';
+import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../configs/index.js';
 import {getTokensInfo} from '../../contracts/index.js';
 import {maker, asset, rates} from '../cell/index.js';
 import chains from '../../configs/chains.json' assert {type: 'json'};
@@ -12,6 +12,7 @@ export async function loadTable() {
    const ordersSection = document.querySelector('#ordersSection');
    const ordersCount = document.querySelector('#ordersCount');
    const popEmptyBalancesBtn = document.querySelector('#popEmptyBalances');
+
    animation.innerHTML = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
    ordersSection.textContent = ordersCount.textContent = '';
    popEmptyBalancesBtn.style.display = 'none';
@@ -22,7 +23,8 @@ export async function loadTable() {
       takerAsset: getValue('takerAsset'),
       walletAddress: getValue('walletAddress'),
       chainId: getValue('chainId'),
-      statuses: getStatuses(document.querySelector('#statuses').options)
+      statuses: getSelectedValues(document.querySelector('#statuses').options),
+      appVersions: getSelectedValues(document.querySelector('#appVersions').options),
    };
    const response = await fetch(getLimitOrdersUrl(fields));
    const json = await response.json();
@@ -53,7 +55,7 @@ export async function loadTable() {
             ${asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo[order.data.makerAsset])}
             ${asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo[order.data.takerAsset])}
             ${rates(order, tokensInfo)}
-            <td>${getLocaleDateTime(order.createDateTime)}</td>
+            <td>${getFormattedDateTime(order.createDateTime)}</td>
          </tr>
          `).join(EMPTY_STRING_JOIN)}
       </tbody>

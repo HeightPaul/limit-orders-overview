@@ -6,6 +6,16 @@ function fillInput(urlParams, inputId) {
    return fieldSearch;
 }
 
+function fillSelectedValues(urlParams, inputId) {
+   const statusesSearch = JSON.parse(urlParams.get(inputId));
+   if(statusesSearch) {
+      const statusesSelect = document.querySelector(`#${inputId}`);
+      Array.from(statusesSelect.options).forEach((option) => {
+         option.selected = statusesSearch.includes(option.value);
+      });
+   }
+}
+
 function setUrlParam(urlParams, inputId) {
    const fieldValue = getValue(inputId);
    if(fieldValue) {
@@ -17,4 +27,4 @@ function getValue(inputId) {
    return document.querySelector(`#${inputId}`)?.value;
 }
 
-export {fillInput, setUrlParam, getValue};
+export {fillInput, fillSelectedValues, setUrlParam, getValue};

@@ -1,11 +1,11 @@
-function getStatuses(htmlOptions) {
+function getSelectedValues(htmlOptions) {
    return Array.from(htmlOptions)
       .filter(option => option.selected)
       .map(option => option.value);
 }
 
 function getLimitOrdersUrl(fields) {
-   const url = `https://limit-orders.1inch.io/v2.0/${fields.chainId}/limit-order/${
+   const url = `https://limit-orders.1inch.io/v${fields.appVersions}/${fields.chainId}/limit-order/${
       fields.walletAddress
          ? `address/${fields.walletAddress}`
          : 'all'
@@ -14,17 +14,17 @@ function getLimitOrdersUrl(fields) {
    const params = new URLSearchParams({
       page: 1,
       limit: 100,
-      statuses: JSON.stringify(fields.statuses),
       makerAsset: fields.makerAsset,
-      takerAsset: fields.takerAsset
+      takerAsset: fields.takerAsset,
+      statuses: JSON.stringify(fields.statuses),
    });
 
    return `${url}?${params}`;
 }
 
-function getLocaleDateTime(utcDateTime) {
+function getFormattedDateTime(utcDateTime) {
    const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
    return new Date(utcDateTime).toLocaleDateString(undefined, options);
 }
 
-export {getStatuses, getLimitOrdersUrl, getLocaleDateTime};
+export {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime};

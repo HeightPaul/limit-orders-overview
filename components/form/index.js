@@ -1,5 +1,5 @@
-import {fillInput, setUrlParam} from './fill.js';
-import {getStatuses} from '../../configs/index.js';
+import {fillInput, fillSelectedValues, setUrlParam} from './fill.js';
+import {getSelectedValues} from '../../configs/index.js';
 
 function fillFormBySearchParams() {
    const urlParams = new URLSearchParams(window.location.search);
@@ -7,13 +7,8 @@ function fillFormBySearchParams() {
    fillInput(urlParams, 'makerAsset');
    fillInput(urlParams, 'takerAsset');
    fillInput(urlParams, 'chainId');
-   const statusesSearch = JSON.parse(urlParams.get('statuses'));
-   if(statusesSearch) {
-      const statusesSelect = document.querySelector('#statuses');
-      Array.from(statusesSelect.options).forEach((option) => {
-         option.selected = statusesSearch.includes(option.value);
-      });
-   }
+   fillSelectedValues(urlParams, 'statuses');
+   fillSelectedValues(urlParams, 'appVersions');
 }
 
 function fillWalletAddress(urlParams) {
@@ -35,7 +30,8 @@ function sendPageSearchParamsByForm() {
    setUrlParam(urlParams, 'chainId');
    setUrlParam(urlParams, 'walletAddress');
    setUrlParam(urlParams, 'chainId');
-   urlParams.set('statuses', JSON.stringify(getStatuses(document.querySelector('#statuses').options)));
+   urlParams.set('statuses', JSON.stringify(getSelectedValues(document.querySelector('#statuses').options)));
+   urlParams.set('appVersions', JSON.stringify(getSelectedValues(document.querySelector('#appVersions').options)));
    window.history.pushState(null, null, `?${urlParams}`);
 }
 
