@@ -1,6 +1,6 @@
 function fillInput(urlParams, inputId) {
    const fieldSearch = urlParams.get(inputId);
-   if(inputId) {
+   if(fieldSearch !== null) {
       document.querySelector(`#${inputId}`).value = fieldSearch;
    }
    return fieldSearch;
