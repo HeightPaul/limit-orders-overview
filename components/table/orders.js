@@ -18,25 +18,17 @@ export async function loadTable() {
    popEmptyBalancesBtn.style.display = 'none';
    popEmptyBalancesBtn.innerText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
 
-   const fields = {
-      makerAsset: getValue('makerAsset'),
-      takerAsset: getValue('takerAsset'),
-      walletAddress: getValue('walletAddress'),
-      chainId: getValue('chainId'),
-      statuses: getSelectedValues(document.querySelector('#statuses').options),
-      appVersions: getSelectedValues(document.querySelector('#appVersions').options),
-   };
-   const response = await fetch(getLimitOrdersUrl(fields));
-   const orders = await response.json();
-   if (orders.error) {
-      ordersSection.innerHTML = `${orders.statusCode ?? 'No Status code'}: ${orders.error}`;
+   const {result, chainId} = await ordersApi();
+   if (result.error) {
+      ordersSection.innerHTML = `${result.statusCode ?? 'No Status code'}: ${result.error}`;
       animation.innerHTML = '';
       return Promise.reject('failed');
    }
+
    animation.innerHTML = '';
-   ordersSection.innerHTML = await ordersTableHtml(orders, fields.chainId);
+   ordersSection.innerHTML = await ordersTableHtml(result, chainId);
    const ordersDataTable = dataTable(popEmptyBalancesBtn);
-   ordersCount.textContent = `Found: ${orders.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`;
+   ordersCount.textContent = `Found: ${result.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`;
    brighter();
    return Promise.resolve('rendered');
 }
@@ -73,4 +65,20 @@ async function ordersTableHtml(orders, chainId) {
       </tbody>
    </table>
    `;
+}
+
+async function ordersApi() {
+   const fields = {
+      makerAsset: getValue('makerAsset'),
+      takerAsset: getValue('takerAsset'),
+      walletAddress: getValue('walletAddress'),
+      chainId: getValue('chainId'),
+      statuses: getSelectedValues(document.querySelector('#statuses').options),
+      appVersions: getSelectedValues(document.querySelector('#appVersions').options),
+   };
+   const response = await fetch(getLimitOrdersUrl(fields));
+   return {
+      result: await response.json(),
+      chainId: fields.chainId,
+   };
 }
