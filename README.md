@@ -6,12 +6,14 @@ Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 - Maker and taker token addresses search
 - Single and not-specified (multiple) addresses' orders
 
-## 👣 First steps
-1. Install `NodeJS` and `NPM`.
-2. Install packages: `npm install`.*
-3. Run basic server: `npx http-server`.
-4. Open http://localhost:8080/.
-5. Lint codebase: `npm run lint` | VSCode Extension `ESLint`.
+## 👣 Steps
+1. Add `NodeJS` and `npm`.
+2. `npm install`.
+3. `npm run lint` | VSCode Extension `ESLint`.
+4. Run serve: `npm start`.
+5. Open http://localhost:4200/.
+6. Update changes on a seperate terminal: `npm run build`.
 
-#### Note:
-*`babel/eslint-parser` is included for not-supported-by-default JSON imports.
+
+### Credits
+Expiration - [limit-order-parser](https://github.com/1inch/limit-order-parser)

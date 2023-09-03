@@ -32,7 +32,7 @@ async function getTokenAbiInfo(address, provider) {
 
 function addAddressKeys(nestedTokensInfo) {
    const tokensInfo = {};
-   for(const tokensInfoObj of nestedTokensInfo) {
+   for (const tokensInfoObj of nestedTokensInfo) {
       const address = tokensInfoObj.address;
       delete tokensInfoObj.address;
       tokensInfo[address] = tokensInfoObj;
@@ -41,7 +41,7 @@ function addAddressKeys(nestedTokensInfo) {
 }
 
 async function addImageUrls(tokensInfo, chain) {
-   for(const tokenAddress in tokensInfo) {
+   for (const tokenAddress in tokensInfo) {
       const tokenUrl =`${ZAPPER_FI_URL}/${chain.name}/${tokenAddress}.png`;
       const response = await fetch(tokenUrl);
       tokensInfo[tokenAddress].imageUrl = response.ok ? tokenUrl : `${chain.scanUrl}/images/main/empty-token.png`;

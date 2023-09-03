@@ -7,7 +7,7 @@ function dataTable(popEmptyBalancesBtn) {
    });
 
    const emptyRowsLength = getEmptyRows().length;
-   if(emptyRowsLength) {
+   if (emptyRowsLength) {
       popEmptyBalancesBtn.style.display = '';
    }
 
@@ -16,7 +16,7 @@ function dataTable(popEmptyBalancesBtn) {
 
 function toggleEmptyBalances() {
    const emptyRows = getEmptyRows();
-   if(emptyRows.length) {
+   if (emptyRows.length) {
       const showEmpty = this.innerText === '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
       this.innerText = showEmpty ? '🏳️' : '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
       emptyRows.forEach(emptyRow => {
@@ -35,9 +35,7 @@ function brighter() {
 function getEmptyRows() {
    const emptyRows = [];
    [...document.querySelectorAll('.balanceAmount')]
-      .filter(amount => {
-         return Number(amount.innerText) === 0;
-      })
+      .filter(amount => Number(amount.innerText) === 0)
       .forEach(amount => {
          const emptyRow = amount.closest('tr');
          emptyRow.style.display = 'none';
@@ -51,4 +49,4 @@ function getSixDigits(number) {
    return digitsAsString.slice(2, 8);
 }
 
-export{dataTable, toggleEmptyBalances, brighter};
+export {dataTable, toggleEmptyBalances, brighter};

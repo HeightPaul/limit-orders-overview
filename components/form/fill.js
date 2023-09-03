@@ -1,6 +1,6 @@
 function fillInput(urlParams, inputId) {
    const fieldSearch = urlParams.get(inputId);
-   if(fieldSearch !== null) {
+   if (fieldSearch !== null) {
       document.querySelector(`#${inputId}`).value = fieldSearch;
    }
    return fieldSearch;
@@ -8,7 +8,7 @@ function fillInput(urlParams, inputId) {
 
 function fillSelectedValues(urlParams, inputId) {
    const statusesSearch = JSON.parse(urlParams.get(inputId));
-   if(statusesSearch) {
+   if (statusesSearch) {
       const statusesSelect = document.querySelector(`#${inputId}`);
       Array.from(statusesSelect.options).forEach((option) => {
          option.selected = statusesSearch.includes(option.value);
@@ -18,7 +18,7 @@ function fillSelectedValues(urlParams, inputId) {
 
 function setUrlParam(urlParams, inputId) {
    const fieldValue = getValue(inputId);
-   if(fieldValue) {
+   if (fieldValue) {
       urlParams.set(inputId, fieldValue);
    }
 }

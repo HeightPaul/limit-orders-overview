@@ -13,7 +13,7 @@ function fillFormBySearchParams() {
 
 function fillWalletAddress(urlParams) {
    const walletAddress = fillInput(urlParams, 'walletAddress');
-   if(!walletAddress) {
+   if (!walletAddress) {
       document.querySelector('#allAddresses').checked = true;
       changeOnAllAddresses();
    }

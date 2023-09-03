@@ -1,9 +1,9 @@
 import {formatToken} from '../../contracts/units/index.js';
 
-function maker(makerWalletAddress, balance, chain, tokenInfo) {
+function maker(makerWalletAddress, balance, chainScanUrl, tokenInfo) {
    return `
       <td>
-         <a target="_blank" href="${chain.scanUrl}/address/${makerWalletAddress}" class="coloredAddress">${makerWalletAddress.slice(0, 21)}...</a>
+         <a target="_blank" href="${chainScanUrl}/address/${makerWalletAddress}" class="coloredAddress">${makerWalletAddress.slice(0, 21)}...</a>
          <div>
             <span class="balanceAmount">${parseFloat(formatToken(balance, tokenInfo.decimals)).toPrecision(8)}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
@@ -12,13 +12,13 @@ function maker(makerWalletAddress, balance, chain, tokenInfo) {
    `;
 }
 
-function asset(tokenAddress, amount, chain, tokenInfo) {
+function asset(tokenAddress, amount, chainScanUrl, tokenInfo) {
    return `
       <td>
          <div class="d-flex flex-wrap">
             <div><img class="tokenIcon m-1" src="${tokenInfo.imageUrl}" alt="CT"/></div>
             <div>
-               <div><a target="_blank" href="${chain.scanUrl}/address/${tokenAddress}" class="link-secondary">${tokenInfo.symbol}</a></div>
+               <div><a target="_blank" href="${chainScanUrl}/address/${tokenAddress}" class="link-secondary">${tokenInfo.symbol}</a></div>
                <div>${parseFloat(formatToken(amount, tokenInfo.decimals)).toPrecision(8)}</div>
             </div>
          </div>

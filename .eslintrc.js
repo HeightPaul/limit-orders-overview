@@ -7,13 +7,9 @@ module.exports = {
    'extends': 'eslint:recommended',
    'parser': '@babel/eslint-parser',
    'parserOptions': {
-      'requireConfigFile': false,
-      'babelOptions': {
-         'plugins': [
-            '@babel/plugin-syntax-import-assertions'
-         ]
-      },
+      'requireConfigFile': false
    },
+   'ignorePatterns': ['dist/main.js'],
    'rules': {
       'prefer-const': 'error',
       'no-multiple-empty-lines': 'warn',
@@ -24,6 +20,7 @@ module.exports = {
       'object-curly-spacing': ['error', 'never'],
       'array-bracket-spacing': ['error', 'never'],
       'key-spacing': ['error', {'beforeColon': false}],
+      'keyword-spacing': ['error', {'after': true}],
       'space-before-blocks': ['error', 'always'],
       'comma-spacing': ['error', {'before': false, 'after': true}],
       'eol-last': ['error', 'always'],

@@ -4,8 +4,8 @@ import {getTokensInfo} from '../../contracts/index.js';
 import {maker, asset, rates} from '../cell/index.js';
 import chains from '../../configs/chains.json' assert {type: 'json'};
 import {dataTable, brighter} from './interactive.js';
-
-const EMPTY_STRING_JOIN = '';
+import loadingHtml from '../form/loading.js';
+import expiration from '../../contracts/orders/expiration.js';
 
 export async function loadTable() {
    const animation = document.querySelector('#animation');
@@ -13,7 +13,7 @@ export async function loadTable() {
    const ordersCount = document.querySelector('#ordersCount');
    const popEmptyBalancesBtn = document.querySelector('#popEmptyBalances');
 
-   animation.innerHTML = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
+   animation.innerHTML = loadingHtml();
    ordersSection.textContent = ordersCount.textContent = '';
    popEmptyBalancesBtn.style.display = 'none';
    popEmptyBalancesBtn.innerText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
@@ -27,45 +27,50 @@ export async function loadTable() {
       appVersions: getSelectedValues(document.querySelector('#appVersions').options),
    };
    const response = await fetch(getLimitOrdersUrl(fields));
-   const json = await response.json();
-
-   if(json.error) {
-      ordersSection.innerHTML = `${json.statusCode ?? 'Failed'}: ${json.error}`;
+   const orders = await response.json();
+   if (orders.error) {
+      ordersSection.innerHTML = `${orders.statusCode ?? 'No Status code'}: ${orders.error}`;
       animation.innerHTML = '';
       return Promise.reject('failed');
    }
-
-   const chain = chains[fields.chainId];
-   const tokensInfo = await getTokensInfo(json, chain);
-   const table = `
-      <table class="table table-striped table-dark" id="ordersTable">
-         <thead class="thead-dark">
-            <tr>
-               <th scope="col">Address|Balance</th>
-               <th scope="col">Sell</th>
-               <th scope="col">Buy</span></th>
-               <th scope="col">Order Rates</th>
-               <th scope="col">Created</th>
-            </tr>
-         </thead>
-         <tbody>
-         ${json.map(order=> `
-         <tr>
-            ${maker(order.data.maker, order.makerBalance, chain, tokensInfo[order.data.makerAsset])}
-            ${asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo[order.data.makerAsset])}
-            ${asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo[order.data.takerAsset])}
-            ${rates(order, tokensInfo)}
-            <td>${getFormattedDateTime(order.createDateTime)}</td>
-         </tr>
-         `).join(EMPTY_STRING_JOIN)}
-      </tbody>
-    </table>
-  `;
-
    animation.innerHTML = '';
-   ordersSection.innerHTML = table;
+   ordersSection.innerHTML = await ordersTableHtml(orders, fields.chainId);
    const ordersDataTable = dataTable(popEmptyBalancesBtn);
-   ordersCount.textContent = `Found: ${json.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`;
+   ordersCount.textContent = `Found: ${orders.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`;
    brighter();
    return Promise.resolve('rendered');
+}
+
+async function ordersTableHtml(orders, chainId) {
+   const chain = chains[chainId];
+   const tokensInfo = await getTokensInfo(orders, chain);
+   return `
+   <table class="table table-striped table-dark" id="ordersTable">
+      <thead class="thead-dark">
+         <tr>
+            <th scope="col">Address|Balance</th>
+            <th scope="col">Sell</th>
+            <th scope="col">Buy</span></th>
+            <th scope="col">Order Rates</th>
+            <th scope="col">Creation</th>
+            <th scope="col">Expiration</th>
+         </tr>
+      </thead>
+      <tbody>
+      ${orders.map(order => {
+      const expire = parseInt(expiration(order.data, chainId)) * 1000;
+      return `
+         <tr>
+            ${maker(order.data.maker, order.makerBalance, chain.scanUrl, tokensInfo[order.data.makerAsset])}
+            ${asset(order.data.makerAsset, order.data.makingAmount, chain.scanUrl, tokensInfo[order.data.makerAsset])}
+            ${asset(order.data.takerAsset, order.data.takingAmount, chain.scanUrl, tokensInfo[order.data.takerAsset])}
+            ${rates(order, tokensInfo)}
+            <td>${getFormattedDateTime(order.createDateTime)}</td>
+            <td>${expire ? getFormattedDateTime(expire) : ''}</td>
+         </tr>
+      `;
+   }).join('')}
+      </tbody>
+   </table>
+   `;
 }
