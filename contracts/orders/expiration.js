@@ -2,10 +2,10 @@
 import {LimitOrderDecoder, LimitOrderPredicateDecoder} from '@1inch/limit-order-protocol-utils';
 
 function expiration(orderData, chainId) {
-   let predicate = orderData.predicate;
+   let predicate = orderData.predicate; // 1Inch V2
    if (!predicate && orderData.offsets && orderData.interactions) {
       const unpacked = LimitOrderDecoder.unpackInteractions(orderData.offsets, orderData.interactions);
-      predicate = unpacked.predicate;
+      predicate = unpacked.predicate; // 1Inch V3
    }
    if (predicate) {
       return extract(predicate, chainId);

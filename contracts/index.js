@@ -1,8 +1,9 @@
-/* eslint-disable no-undef */
+import {Contract, JsonRpcProvider} from 'ethers';
+
 const ZAPPER_FI_URL = 'https://storage.googleapis.com/zapper-fi-assets/tokens';
 
 async function getTokensInfo(orders, chain) {
-   const provider = new ethers.providers.JsonRpcProvider(chain.rpcUrl);
+   const provider = new JsonRpcProvider(chain.rpcUrl);
    const addresses = getUniqueTokens(orders);
    const nestedTokensInfo = await Promise.all(addresses.map(async(address) => await getTokenAbiInfo(address, provider)));
    return await addImageUrls(addAddressKeys(nestedTokensInfo), chain);
@@ -22,7 +23,8 @@ async function getTokenAbiInfo(address, provider) {
       'function symbol() view returns (string)',
       'function decimals() view returns (uint)'
    ];
-   const tokenContract = new ethers.Contract(address, tokenAbi, provider);
+   
+   const tokenContract = new Contract(address, tokenAbi, provider);
    return {
       address: address,
       symbol: await tokenContract.symbol(),

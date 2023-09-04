@@ -1,6 +1,8 @@
-/* eslint-disable no-undef */
-function dataTable(popEmptyBalancesBtn) {
-   new simpleDatatables.DataTable('#ordersTable', {
+import {color} from 'd3';
+import {DataTable} from 'simple-datatables';
+
+function getDataTable(popEmptyBalancesBtn) {
+   new DataTable('#ordersTable', {
       searchable: true,
       perPage: 100,
       perPageSelect: [100]
@@ -28,7 +30,7 @@ function toggleEmptyBalances() {
 function brighter() {
    document.querySelectorAll('.coloredAddress').forEach(address => {
       const hexNumber = address.innerText.slice(0, -3);
-      address.style.color = d3.color(`#${getSixDigits(hexNumber)}`).brighter(6);
+      address.style.color = color(`#${getSixDigits(hexNumber)}`).brighter(6);
    });
 }
 
@@ -49,4 +51,4 @@ function getSixDigits(number) {
    return digitsAsString.slice(2, 8);
 }
 
-export {dataTable, toggleEmptyBalances, brighter};
+export {getDataTable, toggleEmptyBalances, brighter};

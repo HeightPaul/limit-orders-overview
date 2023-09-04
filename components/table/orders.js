@@ -3,7 +3,7 @@ import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../
 import {getTokensInfo} from '../../contracts/index.js';
 import {maker, asset, rates} from '../cell/index.js';
 import chains from '../../configs/chains.json' assert {type: 'json'};
-import {dataTable, brighter} from './interactive.js';
+import {getDataTable, brighter} from './interactive.js';
 import loadingHtml from '../form/loading.js';
 import expiration from '../../contracts/orders/expiration.js';
 
@@ -27,7 +27,7 @@ export async function loadTable() {
 
    animation.innerHTML = '';
    ordersSection.innerHTML = await ordersTableHtml(result, chainId);
-   const ordersDataTable = dataTable(popEmptyBalancesBtn);
+   const ordersDataTable = getDataTable(popEmptyBalancesBtn);
    ordersCount.textContent = `Found: ${result.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`;
    brighter();
    return Promise.resolve('rendered');

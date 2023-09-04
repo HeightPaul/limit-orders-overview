@@ -1,4 +1,5 @@
-/* eslint-disable no-undef */
+import {formatUnits} from 'ethers';
+
 export function formatToken(input, decimals = 18) {
-   return ethers.utils.formatUnits(input, decimals);
+   return formatUnits(input, decimals);
 }
