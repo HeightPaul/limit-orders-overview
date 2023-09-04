@@ -3,7 +3,6 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = (env, argv) => {
    return {
-      mode: 'none',
       entry: './src/index.js',
       output: {
          filename: 'main.js',
@@ -11,7 +10,7 @@ module.exports = (env, argv) => {
       },
       cache: argv.mode !== 'development',
       devServer: {
-         static: path.join(__dirname, 'dist'),
+         static: path.join(__dirname),
          compress: true,
          port: 4200,
       },
