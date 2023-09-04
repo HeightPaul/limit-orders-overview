@@ -2,7 +2,7 @@
 Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 - Github Page Host: https://heightpaul.github.io/limit-orders-overview/
 
-## 🌾 Supports
+## 🌾 Support
 - Maker and taker token addresses search
 - Single and not-specified (multiple) addresses' orders
 
@@ -15,5 +15,5 @@ Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 6. Update changes on a seperate terminal: `npm run build`.
 
 
-### Credits
+### 💡 Credits
 Expiration - [limit-order-parser](https://github.com/1inch/limit-order-parser)
