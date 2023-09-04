@@ -4,14 +4,14 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 module.exports = (env, argv) => {
    return {
       mode: 'none',
-      entry: './index.js',
+      entry: './src/index.js',
       output: {
          filename: 'main.js',
          path: path.resolve(__dirname, 'dist'),
       },
       cache: argv.mode !== 'development',
       devServer: {
-         static: path.join(__dirname),
+         static: path.join(__dirname, 'dist'),
          compress: true,
          port: 4200,
       },
