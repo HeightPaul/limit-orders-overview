@@ -1,11 +1,11 @@
 import {getValue} from '../form/fill.js';
+import loadingHtml from '../form/loading.js';
 import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../configs/index.js';
-import {getTokensInfo} from '../../contracts/index.js';
-import {maker, asset, rates} from '../cell/index.js';
+import expiration from '../../contracts/orders/expiration.js';
+import getTokensInfo from '../../contracts/abiTokenInfo.js';
+import {maker, asset, rates} from '../cell/cell.js';
 import chains from '../../configs/chains.json' assert {type: 'json'};
 import {getDataTable, brighter} from './interactive.js';
-import loadingHtml from '../form/loading.js';
-import expiration from '../../contracts/orders/expiration.js';
 
 export async function loadTable() {
    const animation = document.querySelector('#animation');
@@ -49,19 +49,19 @@ async function ordersTableHtml(orders, chainId) {
          </tr>
       </thead>
       <tbody>
-      ${orders.map(order => {
+      ${(await Promise.all(orders.map(async(order) => {
       const expire = parseInt(expiration(order.data, chainId)) * 1000;
       return `
          <tr>
             ${maker(order.data.maker, order.makerBalance, chain.scanUrl, tokensInfo[order.data.makerAsset])}
-            ${asset(order.data.makerAsset, order.data.makingAmount, chain.scanUrl, tokensInfo[order.data.makerAsset])}
-            ${asset(order.data.takerAsset, order.data.takingAmount, chain.scanUrl, tokensInfo[order.data.takerAsset])}
+            ${await asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo[order.data.makerAsset])}
+            ${await asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo[order.data.takerAsset])}
             ${rates(order, tokensInfo)}
             <td>${getFormattedDateTime(order.createDateTime)}</td>
             <td>${expire ? getFormattedDateTime(expire) : ''}</td>
          </tr>
       `;
-   }).join('')}
+   }))).join('')}
       </tbody>
    </table>
    `;

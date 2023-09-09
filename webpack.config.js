@@ -7,6 +7,7 @@ module.exports = (env, argv) => {
       output: {
          filename: 'main.js',
          path: path.resolve(__dirname, 'dist'),
+         publicPath: '/dist'
       },
       cache: argv.mode !== 'development',
       devServer: {

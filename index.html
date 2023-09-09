@@ -10,6 +10,7 @@
       <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="styles/animation.css">
       <link rel="stylesheet" href="styles/index.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
    </head>
    <body class="bg-dark text-white">
       <div id="root" class="p-4">
@@ -22,16 +23,18 @@
                <div class="col-4">
                   <div class="form-group">
                      <label class="text-center m-1" for="makerAsset">Sell:</label>
-                     <input type="text" id="makerAsset" class="form-control w-100 m-1" placeholder="0x...">
+                     <input type="text" id="makerAsset" class="form-control w-100 m-1 dropdown-toggle" placeholder="Search">
+                     <ul id="makerAssetOptions" class="dropdown-menu">
+                     </ul>
                   </div>
                   <div class="form-group">
                      <label class="text-center m-1" for="takerAsset">Buy:</label>
-                     <input type="text" id="takerAsset" class="form-control w-100 m-1" placeholder="0x...">
+                     <input type="text" id="takerAsset" class="form-control w-100 m-1" placeholder="Search">
                   </div>
                   <div class="form-group">
                      <span>
                         <input class="form-check-input ml-2" type="checkbox" id="allAddresses">
-                        <label class="form-check-label" for="allAddresses">All <span class="text-danger">*</span></Address></label>
+                        <label class="form-check-label" for="allAddresses">All Orders <span class="text-danger">*</span></Address></label>
                      </span>
                      <span id="walletAddressGroup">
                         <label class="text-center m-1" for="walletAddress">| Address: <span class="text-danger">*</span></label>
