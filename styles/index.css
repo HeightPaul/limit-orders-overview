@@ -19,7 +19,7 @@
    width: 1.3rem;
 }
 
-#makerAssetOptions{
+[data-select]{
    max-height: 30rem;
    overflow-y: auto;
 }

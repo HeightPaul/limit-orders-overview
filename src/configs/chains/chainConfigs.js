@@ -1,21 +1,25 @@
 import chains from './chainList.json' assert {type: 'json'}
 
-function loadChains() {
-   const arrayOptionsHtml = []
-   console.log
-   for (const [id, chain] of Object.entries(chains)) {
-      arrayOptionsHtml.push( `<option value="${id}">${chain.publicName}</option>`)
-   }
-   return arrayOptionsHtml.join('')
+const ETH_INDEX = 0
+const CHAIN_LOGO_URL = 'https://app.1inch.io/assets/images/network-logos'
+
+function loadChainIdSelect(chainIdSelect) {
+   chainIdSelect.innerHTML = Object.entries(chains)
+      .map(([id, chain]) => `<option value="${id}">${chain.publicName}</option>`)
+      .join('')
+   chainIdSelect.selectedIndex = ETH_INDEX
 }
 
 function changeChainLogo(event) {
-   const id = event.target.value
+   loadChainLogo(event.target.value)
+}
+
+function loadChainLogo(id) {
    if (id) {
       const chain = chains[id]
       const chainImg = document.querySelector('#chainImg')
-      chainImg.src = `https://app.1inch.io/assets/images/network-logos/${chain.name}-transparent.svg#${chain.name}`
+      chainImg.src = `${CHAIN_LOGO_URL}/${chain.name}-transparent.svg#${chain.name}`
    }
 }
 
-export {loadChains, changeChainLogo}
+export {loadChainIdSelect, changeChainLogo, loadChainLogo}

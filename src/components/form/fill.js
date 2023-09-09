@@ -7,11 +7,14 @@ function fillInput(urlParams, inputId) {
 }
 
 function fillSelectedValues(urlParams, inputId) {
-   const statusesSearch = JSON.parse(urlParams.get(inputId))
-   if (statusesSearch) {
-      const statusesSelect = document.querySelector(`#${inputId}`)
-      Array.from(statusesSelect.options).forEach((option) => {
-         option.selected = statusesSearch.includes(option.value)
+   let input = JSON.parse(urlParams.get(inputId))
+   if (input) {
+      if (!Array.isArray(input)) {
+         input = [String(input)]
+      }
+      const select = document.querySelector(`#${inputId}`)
+      Array.from(select.options).forEach(option => {
+         option.selected = input.includes(option.value)
       })
    }
 }

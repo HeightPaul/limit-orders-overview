@@ -6,7 +6,7 @@ function fillFormBySearchParams() {
    fillWalletAddress(urlParams)
    fillInput(urlParams, 'makerAsset')
    fillInput(urlParams, 'takerAsset')
-   fillInput(urlParams, 'chainId')
+   fillSelectedValues(urlParams, 'chainId')
    fillSelectedValues(urlParams, 'statuses')
    fillSelectedValues(urlParams, 'appVersions')
 }
@@ -20,6 +20,11 @@ function fillWalletAddress(urlParams) {
    document.title += ` - ${walletAddress ?? 'All'}`
 }
 
+function changeOnAllAddresses() {
+   document.querySelector('#walletAddressGroup').classList.toggle('d-none')
+   document.querySelector('#walletAddress').value = ''
+}
+
 function sendPageSearchParamsByForm() {
    const urlParams = new URLSearchParams(window.location.search)
    document.querySelectorAll('.form-control').forEach(field => {
@@ -27,7 +32,6 @@ function sendPageSearchParamsByForm() {
    })
    setUrlParam(urlParams, 'makerAsset')
    setUrlParam(urlParams, 'takerAsset')
-   setUrlParam(urlParams, 'chainId')
    setUrlParam(urlParams, 'walletAddress')
    setUrlParam(urlParams, 'chainId')
    urlParams.set('statuses', JSON.stringify(getSelectedValues(document.querySelector('#statuses').options)))
@@ -39,11 +43,6 @@ function clearForm() {
    document.querySelectorAll('.form-control').forEach(field => {
       field.value = ''
    })
-}
-
-function changeOnAllAddresses() {
-   document.querySelector('#walletAddressGroup').classList.toggle('d-none')
-   document.querySelector('#walletAddress').value = ''
 }
 
 export {fillFormBySearchParams, sendPageSearchParamsByForm, clearForm, changeOnAllAddresses}
