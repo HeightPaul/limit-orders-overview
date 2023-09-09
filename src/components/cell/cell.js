@@ -4,7 +4,7 @@ import imageUrl from '../../utils/imageUrl.js'
 function maker(makerWalletAddress, balance, chainScanUrl, tokenInfo) {
    return `
       <td>
-         <a target="_blank" href="${chainScanUrl}/address/${makerWalletAddress}" class="coloredAddress fw-light">${makerWalletAddress.slice(0, 21)}...</a>
+         <a target="_blank" href="${chainScanUrl}/address/${makerWalletAddress}" class="text-decoration-none fw-light coloredAddress">${makerWalletAddress.slice(0, 21)}...</a>
          <div>
             <span class="balanceAmount">${parseFloat(formatToken(balance, tokenInfo.decimals)).toPrecision(8)}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
@@ -19,7 +19,7 @@ async function asset(address, amount, chain, tokenInfo) {
          <div class="d-flex flex-wrap">
             <div><img class="tokenIcon m-1" src="${await imageUrl(address, chain)}" alt="CT"/></div>
             <div>
-               <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="link-secondary">${tokenInfo.symbol}</a></div>
+               <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none link-secondary">${tokenInfo.symbol}</a></div>
                <div>${parseFloat(formatToken(amount, tokenInfo.decimals)).toPrecision(8)}</div>
             </div>
          </div>

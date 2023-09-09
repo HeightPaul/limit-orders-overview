@@ -1,5 +1,5 @@
 import {fillInput, fillSelectedValues, setUrlParam} from './fill.js'
-import {getSelectedValues} from '../../configs/index.js'
+import {getSelectedValues} from '../../configs/configs.js'
 
 function fillFormBySearchParams() {
    const urlParams = new URLSearchParams(window.location.search)

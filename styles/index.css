@@ -2,8 +2,16 @@
    text-decoration: underline !important;
 }
 
+.link-secondary{
+   color: #bdc1c4;
+}
+
 .tokenIcon{
    width: 2.4rem;
+}
+
+#chainImg{
+   width: 5rem;
 }
 
 #allAddresses{
@@ -12,10 +20,6 @@
 }
 
 #makerAssetOptions{
-   max-height: 500px;
+   max-height: 30rem;
    overflow-y: auto;
-}
-
-.link-secondary{
-   color: #bdc1c4;
 }

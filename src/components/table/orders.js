@@ -1,10 +1,10 @@
 import {getValue} from '../form/fill.js'
 import loadingHtml from '../form/loading.js'
-import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../configs/index.js'
+import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../configs/configs.js'
 import expiration from '../../contracts/orders/expiration.js'
 import getTokensInfo from '../../contracts/abiTokenInfo.js'
 import {maker, asset, rates} from '../cell/cell.js'
-import chains from '../../configs/chains.json' assert {type: 'json'}
+import chains from '../../configs/chains/chainList.json' assert {type: 'json'}
 import {getDataTable, brighter} from './interactive.js'
 
 export async function loadTable() {
@@ -18,19 +18,18 @@ export async function loadTable() {
    popEmptyBalancesBtn.style.display = 'none'
    popEmptyBalancesBtn.innerText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
 
-   const {result, chainId} = await ordersApi()
-   if (result.error) {
-      ordersSection.innerHTML = `${result.statusCode ?? 'No Status code'}: ${result.error}`
+   const {response, chainId} = await getOrdersApi(ordersSection, animation)
+   if (!response.ok) {
+      ordersSection.innerHTML = `${response.status ?? 'No Status'}: ${response.error ?? 'No message'}`
       animation.innerHTML = ''
-      return Promise.reject('failed')
+      return
    }
-
+   const ordersApi = await response.json()
+   ordersSection.innerHTML = await ordersTableHtml(ordersApi, chainId)
    animation.innerHTML = ''
-   ordersSection.innerHTML = await ordersTableHtml(result, chainId)
    const ordersDataTable = getDataTable(popEmptyBalancesBtn)
-   ordersCount.textContent = `Found: ${result.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`
+   ordersCount.textContent = `Found: ${ordersApi.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`
    brighter()
-   return Promise.resolve('rendered')
 }
 
 async function ordersTableHtml(orders, chainId) {
@@ -67,7 +66,7 @@ async function ordersTableHtml(orders, chainId) {
    `
 }
 
-async function ordersApi() {
+async function getOrdersApi() {
    const fields = {
       makerAsset: getValue('makerAsset'),
       takerAsset: getValue('takerAsset'),
@@ -78,7 +77,7 @@ async function ordersApi() {
    }
    const response = await fetch(getLimitOrdersUrl(fields))
    return {
-      result: await response.json(),
+      response: response,
       chainId: fields.chainId,
    }
 }
