@@ -1,5 +1,5 @@
-import {formatToken} from '../../contracts/unit.js';
-import imageUrl from '../../utils/imageUrl.js';
+import {formatToken} from '../../contracts/unit.js'
+import imageUrl from '../../utils/imageUrl.js'
 
 function maker(makerWalletAddress, balance, chainScanUrl, tokenInfo) {
    return `
@@ -10,7 +10,7 @@ function maker(makerWalletAddress, balance, chainScanUrl, tokenInfo) {
             <span class="text-light">${tokenInfo.symbol}</span>
          </div>
       </td>
-   `;
+   `
 }
 
 async function asset(address, amount, chain, tokenInfo) {
@@ -24,12 +24,12 @@ async function asset(address, amount, chain, tokenInfo) {
             </div>
          </div>
       </td>
-  `;
+  `
 }
 
 function rates(order, tokensInfo) {
-   const formattedMakerAmount = parseFloat(formatToken(order.data.makingAmount, tokensInfo[order.data.makerAsset].decimals));
-   const formattedTakerAmount = parseFloat(formatToken(order.data.takingAmount, tokensInfo[order.data.takerAsset].decimals));
+   const formattedMakerAmount = parseFloat(formatToken(order.data.makingAmount, tokensInfo[order.data.makerAsset].decimals))
+   const formattedTakerAmount = parseFloat(formatToken(order.data.takingAmount, tokensInfo[order.data.takerAsset].decimals))
    return `
       <td>
          <div>
@@ -37,7 +37,7 @@ function rates(order, tokensInfo) {
             <div class="text-secondary">${(formattedMakerAmount / formattedTakerAmount).toFixed(5)}</div>
          </div>
       </td>
-   `;
+   `
 }
 
-export {maker, asset, rates};
+export {maker, asset, rates}

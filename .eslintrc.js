@@ -13,7 +13,7 @@ module.exports = {
    'rules': {
       'prefer-const': 'error',
       'no-multiple-empty-lines': 'warn',
-      'semi': ['error', 'always'],
+      'semi': ['error', 'never'],
       'quotes': ['error', 'single'],
       'indent': ['error', 3],
       'brace-style': ['error', '1tbs'],
@@ -25,4 +25,4 @@ module.exports = {
       'comma-spacing': ['error', {'before': false, 'after': true}],
       'eol-last': ['error', 'always'],
    }
-};
+}

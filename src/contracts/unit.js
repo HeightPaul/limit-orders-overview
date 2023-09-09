@@ -1,7 +1,7 @@
-import {formatUnits} from 'ethers';
+import {formatUnits} from 'ethers'
 
-const DEFAULT_DECIMALS = 18;
+const DEFAULT_DECIMALS = 18
 
 export function formatToken(input, decimals = DEFAULT_DECIMALS) {
-   return formatUnits(input, decimals);
+   return formatUnits(input, decimals)
 }

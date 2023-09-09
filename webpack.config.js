@@ -1,5 +1,5 @@
-const path = require('path');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const path = require('path')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 module.exports = (env, argv) => {
    return {
@@ -32,5 +32,5 @@ module.exports = (env, argv) => {
       plugins: [
          new NodePolyfillPlugin()
       ]
-   };
-};
+   }
+}

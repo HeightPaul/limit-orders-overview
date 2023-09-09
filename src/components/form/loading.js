@@ -5,6 +5,6 @@ const loadingHtml = () => `
    <div></div>
    <div></div>
 </div>
-`;
+`
 
-export default loadingHtml;
+export default loadingHtml

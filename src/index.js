@@ -1,18 +1,18 @@
-import {loadTable} from './components/table/orders.js';
-import {fillFormBySearchParams, sendPageSearchParamsByForm, clearForm, changeOnAllAddresses} from './components/form/form.js';
-import {toggleEmptyBalances} from './components/table/interactive.js';
-import {searchForTokenAddress, chooseFromList} from './components/form/search.js';
-import debounce from './utils/debounce.js';
+import {loadTable} from './components/table/orders.js'
+import {fillFormBySearchParams, sendPageSearchParamsByForm, clearForm, changeOnAllAddresses} from './components/form/form.js'
+import {toggleEmptyBalances} from './components/table/interactive.js'
+import {searchForTokenAddress, chooseFromList} from './components/form/search.js'
+import debounce from './utils/debounce.js'
 
-document.querySelector('#checkBtn').addEventListener('click', loadTable);
-document.querySelector('#makerAsset').addEventListener('input', debounce(searchForTokenAddress));
-document.querySelector('#makerAssetOptions').addEventListener('click', chooseFromList);
-document.querySelector('#allAddresses').addEventListener('change', changeOnAllAddresses);
-document.querySelector('#sendPageSearchParams').addEventListener('click', sendPageSearchParamsByForm);
-document.querySelector('#clearForm').addEventListener('click', clearForm);
+document.querySelector('#checkBtn').addEventListener('click', loadTable)
+document.querySelector('#makerAsset').addEventListener('input', debounce(searchForTokenAddress))
+document.querySelector('#makerAssetOptions').addEventListener('click', chooseFromList)
+document.querySelector('#allAddresses').addEventListener('change', changeOnAllAddresses)
+document.querySelector('#sendPageSearchParams').addEventListener('click', sendPageSearchParamsByForm)
+document.querySelector('#clearForm').addEventListener('click', clearForm)
 
-fillFormBySearchParams();
+fillFormBySearchParams()
 if (location.search) {
-   document.querySelector('#checkBtn').click();
+   document.querySelector('#checkBtn').click()
 }
-document.querySelector('#popEmptyBalances').addEventListener('click', toggleEmptyBalances);
+document.querySelector('#popEmptyBalances').addEventListener('click', toggleEmptyBalances)
