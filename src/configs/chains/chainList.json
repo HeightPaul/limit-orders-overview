@@ -28,24 +28,24 @@
       "name": "zksync-era",
       "publicName": "ZKSync Era",
       "scanUrl": "https://explorer.zksync.io",
-      "rpcUrl": "https://zksync.meowrpc.com"
+      "rpcUrl": "https://zksync.drpc.org"
    },
    "8453": {
       "name": "base",
       "publicName": "Base",
       "scanUrl": "https://basescan.org",
-      "rpcUrl": "https://1rpc.io/base"
+      "rpcUrl": "https://endpoints.omniatech.io/v1/base/mainnet/public"
    },
    "42161": {
       "name": "arbitrum",
       "publicName": "Arbitrum",
       "scanUrl": "https://arbiscan.io",
-      "rpcUrl": "https://1rpc.io/arb"
+      "rpcUrl": "https://arbitrum.llamarpc.com"
    },
    "43114": {
       "name": "avalanche",
       "publicName": "Avalanche",
       "scanUrl": "https://snowtrace.io",
-      "rpcUrl": "https://1rpc.io/avax/c"
+      "rpcUrl": "https://avalanche-c-chain.publicnode.com"
    }
 }
