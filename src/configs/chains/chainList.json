@@ -4,19 +4,25 @@
       "name": "ethereum",
       "publicName": "Ethereum",
       "scanUrl": "https://etherscan.io",
-      "rpcUrl": "https://1rpc.io/eth"
-   },
-   "42161": {
-      "name": "arbitrum",
-      "publicName": "Arbitrum",
-      "scanUrl": "https://arbiscan.io",
-      "rpcUrl": "https://1rpc.io/arb"
+      "rpcUrl": "https://eth.llamarpc.com"
    },
    "10": {
       "name": "optimism",
       "publicName": "Optimism",
       "scanUrl": "https://optimistic.etherscan.io",
       "rpcUrl": "https://1rpc.io/op"
+   },
+   "100": {
+      "name": "gnosis",
+      "publicName": "Gnosis",
+      "scanUrl": "https://gnosisscan.io",
+      "rpcUrl": "https://gnosis.drpc.org"
+   },
+   "137": {
+      "name": "polygon",
+      "publicName": "Polygon",
+      "scanUrl": "https://polygonscan.com",
+      "rpcUrl": "https://1rpc.io/matic"
    },
    "324": {
       "name": "zksync-era",
@@ -30,17 +36,11 @@
       "scanUrl": "https://basescan.org",
       "rpcUrl": "https://1rpc.io/base"
    },
-   "137": {
-      "name": "polygon",
-      "publicName": "Polygon",
-      "scanUrl": "https://polygonscan.com",
-      "rpcUrl": "https://1rpc.io/matic"
-   },
-   "100": {
-      "name": "gnosis",
-      "publicName": "Gnosis",
-      "scanUrl": "https://gnosisscan.io",
-      "rpcUrl": "https://gnosis.drpc.org"
+   "42161": {
+      "name": "arbitrum",
+      "publicName": "Arbitrum",
+      "scanUrl": "https://arbiscan.io",
+      "rpcUrl": "https://1rpc.io/arb"
    },
    "43114": {
       "name": "avalanche",

@@ -1,7 +1,7 @@
 const path = require('path')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
-module.exports = (env, argv) => {
+module.exports = () => {
    return {
       entry: './src/index.js',
       output: {
@@ -9,7 +9,6 @@ module.exports = (env, argv) => {
          path: path.resolve(__dirname, 'dist'),
          publicPath: '/dist'
       },
-      cache: argv.mode !== 'development',
       devServer: {
          static: path.join(__dirname),
          compress: true,

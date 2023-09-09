@@ -7,13 +7,17 @@ Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 - Single and not-specified (multiple) addresses' orders
 
 ## 👣 Steps
-1. Add `NodeJS` and `npm`.
-2. `npm install`.
-3. `npm run lint` | VSCode Extension `ESLint`.
-4. Run serve: `npm start`.
-5. Open http://localhost:4200/.
-6. Update changes on a seperate terminal: `npm run build`.
+
+### Instalation
+1. Add `NodeJS` and `npm`
+2. `npm install`
+4. `npm start`
+5. Open http://localhost:4200/
+
+### Deployment
+1. `npm run lint`
+2. `npm run build`
 
 
-### 💡 Credits
-Expiration - [limit-order-parser](https://github.com/1inch/limit-order-parser)
+## 💡 Credits
+Expiration dates - [limit-order-parser](https://github.com/1inch/limit-order-parser)

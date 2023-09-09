@@ -33,7 +33,7 @@ async function getTokensHtml(tokens, chain) {
    return Promise.all(tokens.map(async(token, index) => `
       <li>
          <div class="dropdown-item d-flex flex-wrap">
-            <div><img class="tokenIcon m-1 me-2" src="${await imageUrl(token.address, chain, token.logoUri)}" alt="CT"/></div>
+            <div><img class="tokenIcon m-1 me-2" src="${await imageUrl(token.address, chain)}" alt="CT"/></div>
             <div>
                <div>${token.name} | ${token.symbol}</div>
                <a target="_blank" href="${chain.scanUrl}/address/${token.address}" class="fw-light text-light text-decoration-none" data-address>${token.address}</a>
