@@ -25,6 +25,6 @@ document.querySelector('#popEmptyBalances').addEventListener('click', toggleEmpt
 loadChainIdSelect(chainIdSelect)
 fillFormBySearchParams()
 if (location.search) {
-   checkBtn.click()
    loadChainLogo(chainIdSelect.value)
+   checkBtn.click()
 }

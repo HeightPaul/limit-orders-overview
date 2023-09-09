@@ -19,7 +19,7 @@ async function asset(address, amount, chain, tokenInfo) {
          <div class="d-flex flex-wrap">
             <div><img class="tokenIcon m-1" src="${await imageUrl(address, chain)}" alt="CT"/></div>
             <div>
-               <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none link-secondary">${tokenInfo.symbol}</a></div>
+               <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none text-light">${tokenInfo.symbol}</a></div>
                <div>${parseFloat(formatToken(amount, tokenInfo.decimals)).toPrecision(8)}</div>
             </div>
          </div>

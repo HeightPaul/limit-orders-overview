@@ -1,0 +1,8 @@
+#!/bin/sh
+
+npm run lint-fix
+npm run build
+
+if git diff --name-only | grep dist/main.js; then
+   git add dist/main.js
+fi
