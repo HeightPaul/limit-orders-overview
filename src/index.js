@@ -10,6 +10,7 @@ import debounce from './utils/debounce.js'
 const checkBtn = document.querySelector('#checkBtn')
 checkBtn.addEventListener('click', loadTable)
 document.querySelectorAll('[data-input]').forEach(assetInput => {
+   assetInput.addEventListener('input', debounce(searchForTokenAddress))
    assetInput.addEventListener('click', debounce(searchForTokenAddress))
 })
 document.querySelectorAll('[data-dropdownasset]').forEach(assetSelect => {

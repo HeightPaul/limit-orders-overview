@@ -21,7 +21,8 @@ export async function loadTable() {
 
    const {response, chainId} = await getOrdersApi(ordersSection, animation)
    if (!response.ok) {
-      ordersSection.innerHTML = `${response.status ?? 'No Status'}: ${response.error ?? 'No message'}`
+      const result = await response.json()
+      ordersSection.innerHTML = `<div class="text-capitalize">${Object.entries(result).map(([key, value]) => `${key}: ${value}`).join('. ')}</div>`
       animation.innerHTML = ''
       return
    }

@@ -5,7 +5,7 @@ import {getHsl} from '../table/interactive.js'
 function maker(makerWalletAddress, balance, chainScanUrl, tokenInfo) {
    return `
       <td>
-         <a target="_blank" href="${chainScanUrl}/address/${makerWalletAddress}" class="text-decoration-none fw-light" style="color: ${getHsl(makerWalletAddress)};">${makerWalletAddress.slice(0, 21)}...</a>
+         <a target="_blank" href="${chainScanUrl}/address/${makerWalletAddress}" class="text-decoration-none fw-light" style="color: ${getHsl(makerWalletAddress)};">${makerWalletAddress.slice(0, 30)}...</a>
          <div>
             <span class="balanceAmount">${parseFloat(formatToken(balance, tokenInfo.decimals)).toPrecision(8)}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
