@@ -72,7 +72,8 @@ function setSearchColumns(_data, table, type) {
                   attributes: {
                      class: 'datatable-input',
                      type: 'search',
-                     'data-columns': `[${index}]`
+                     placeholder: 'Search...',
+                     'data-columns': `[${index}]`,
                   }
                }
             ]})

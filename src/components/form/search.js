@@ -12,7 +12,7 @@ async function searchForTokenAddress() {
       assetSelect.innerHTML = loadingHtml()
       const chainId = getValue('chainId')
       const tokens = await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${this.value}`)).json()
-      assetSelect.innerHTML = tokens.length ? (await getTokensHtml(tokens, chains[chainId])).join('') : '<div class="ms-2">No results</div>'
+      assetSelect.innerHTML = tokens.length ? await getTokensHtml(tokens, chains[chainId]) : '<div class="ms-2">No results</div>'
    }
 }
 
@@ -29,7 +29,7 @@ function chooseTokenFromDropdown(event) {
 }
 
 async function getTokensHtml(tokens, chain) {
-   return Promise.all(tokens.map(async(token, index) => `
+   return (await Promise.all(tokens.map(async token => `
       <li class="dropdown-item d-flex flex-wrap">
          <div><img class="tokenIcon m-1 me-2" src="${await imageUrl(token.address, chain)}" alt="CT"/></div>
          <div>
@@ -37,8 +37,7 @@ async function getTokensHtml(tokens, chain) {
             <a target="_blank" href="${chain.scanUrl}/address/${token.address}" class="fw-light text-light text-decoration-none" data-address>${token.address}</a>
          </div>
       </li>
-      ${index !== tokens.length - 1 ? '<li><hr class="dropdown-divider"></li>' : ''}
-   `))
+   `))).join('<li><hr class="dropdown-divider"></li>')
 }
 
 export {searchForTokenAddress, chooseTokenFromDropdown}

@@ -1,14 +1,14 @@
 function loadWalletDropdown(orders) {
+   const uniqueWallets = [...new Set(orders.map(order => order.data.maker))]
    const searchColumn = document.querySelector('[data-columns="[0]"]')
    searchColumn.parentElement.classList.add('d-flex')
    searchColumn.insertAdjacentHTML('beforebegin', `
       <input type="button" id="openWalletDropdown" class="btn btn-primary me-3" value="👛"/>
       <div class="dropend">
          <ul id="walletDropdown" class="dropdown-menu dropdown-menu-dark dataDropdown">
-         ${[...new Set(orders.map(order => order.data.maker))].map((maker, index) => `
+         ${uniqueWallets.map(maker => `
             <li class="dropdown-item">${maker.slice(0, 21)}...</li>
-            ${index !== maker.length - 1 ? '<li><hr class="dropdown-divider"></li>' : ''}
-            `).join('')}
+            `).join('<li><hr class="dropdown-divider"></li>')}
          </ul>
       </div>
       `
