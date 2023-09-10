@@ -14,6 +14,9 @@ module.exports = () => {
          compress: true,
          port: 4200,
       },
+      watchOptions: {
+         aggregateTimeout: 8000,
+      },
       module: {
          rules: [
             {

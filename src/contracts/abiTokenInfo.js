@@ -26,12 +26,25 @@ async function convertedFromAbi(address, provider) {
       'function symbol() view returns (string)',
       'function decimals() view returns (uint)'
    ]
-   
    const tokenContract = new Contract(address, tokenAbi, provider)
+   let symbol
+   try {
+      symbol = await tokenContract.symbol()
+   } catch (error) {
+      console.error(`${address} Symbol: ${error}`)
+      symbol = '<Error>'
+   }
+   let decimals
+   try {
+      decimals = await tokenContract.decimals()
+   } catch (error) {
+      console.error(`${address} Decimals: ${error}`)
+      decimals = null
+   }
    return {
       address: address,
-      symbol: await tokenContract.symbol(),
-      decimals: Number(await tokenContract.decimals())
+      symbol: symbol,
+      decimals: Number(decimals)
    }
 }
 

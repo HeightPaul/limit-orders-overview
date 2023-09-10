@@ -10,6 +10,11 @@
    width: 2.4rem;
 }
 
+.dataDropdown{
+   max-height: 30rem;
+   overflow-y: auto;
+}
+
 #chainImg{
    width: 5rem;
 }
@@ -17,9 +22,4 @@
 #allAddresses{
    height: 1.3rem;
    width: 1.3rem;
-}
-
-[data-select]{
-   max-height: 30rem;
-   overflow-y: auto;
 }

@@ -16,32 +16,29 @@ async function searchForTokenAddress() {
    }
 }
 
-function chooseFromList(event) {
+function chooseTokenFromDropdown(event) {
    if (event.target.tagName === 'A') {
       return
    }
    const li = event.target.closest('li')
    if (li) {
       const chosenAddress = li.querySelector('[data-address]')
-      document.querySelector(`#${this.dataset.select}`).value = chosenAddress.innerText
+      document.querySelector(`#${this.dataset.dropdownasset}`).value = chosenAddress.innerText
       this.classList.remove('show')
    }
 }
 
 async function getTokensHtml(tokens, chain) {
-   const length = tokens.length
    return Promise.all(tokens.map(async(token, index) => `
-      <li>
-         <div class="dropdown-item d-flex flex-wrap">
-            <div><img class="tokenIcon m-1 me-2" src="${await imageUrl(token.address, chain)}" alt="CT"/></div>
-            <div>
-               <div>${token.name} | ${token.symbol}</div>
-               <a target="_blank" href="${chain.scanUrl}/address/${token.address}" class="fw-light text-light text-decoration-none" data-address>${token.address}</a>
-            </div>
+      <li class="dropdown-item d-flex flex-wrap">
+         <div><img class="tokenIcon m-1 me-2" src="${await imageUrl(token.address, chain)}" alt="CT"/></div>
+         <div>
+            <div>${token.name} | ${token.symbol}</div>
+            <a target="_blank" href="${chain.scanUrl}/address/${token.address}" class="fw-light text-light text-decoration-none" data-address>${token.address}</a>
          </div>
       </li>
-      ${index !== length - 1 ? '<li><hr class="dropdown-divider"></li>' : ''}
+      ${index !== tokens.length - 1 ? '<li><hr class="dropdown-divider"></li>' : ''}
    `))
 }
 
-export {searchForTokenAddress, chooseFromList}
+export {searchForTokenAddress, chooseTokenFromDropdown}

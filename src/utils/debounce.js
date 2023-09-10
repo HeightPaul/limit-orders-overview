@@ -1,7 +1,4 @@
-
-const SECOND = 1000
-
-export default function debounce(func, delay = SECOND) {
+export default function debounce(func, delay = 1000) {
    let timer
    return function (...args) {
       clearTimeout(timer)

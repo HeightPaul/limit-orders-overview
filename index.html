@@ -14,7 +14,7 @@
    <body class="bg-dark text-white">
       <div id="root" class="p-4">
          <div class="d-flex justify-content-center">
-            <img class="mt-3" src="https://1inch.io/img/logo.svg" alt="Logo">
+            <img class="mt-3" src="https://1inch.io/img/logo.svg" alt="1Inch">
             <h1 class="text-center display-4 m-4">Limit Orders</h1>
             <img src="https://app.1inch.io/assets/images/network-logos/ethereum-transparent.svg#ethereum" id="chainImg" alt="Chain">
          </div>
@@ -23,13 +23,13 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label class="text-center m-1" for="makerAsset">Sell:</label>
-                     <input type="text" id="makerAsset" class="form-control w-100 m-1 dropdown-toggle" data-input="makerAssetSelect" placeholder="Search">
-                     <ul id="makerAssetSelect" class="dropdown-menu dropdown-menu-dark" data-select="makerAsset"></ul>
+                     <input type="text" id="makerAsset" class="form-control w-100 m-1" data-input="makerAssetDropdown" placeholder="Search">
+                     <ul id="makerAssetDropdown" class="dropdown-menu dropdown-menu-dark dataDropdown" data-dropdownasset="makerAsset"></ul>
                   </div>
                   <div class="form-group">
                      <label class="text-center m-1" for="takerAsset">Buy:</label>
-                     <input type="text" id="takerAsset" class="form-control w-100 m-1 dropdown-toggle" data-input="takerAssetSelect" placeholder="Search">
-                     <ul id="takerAssetSelect" class="dropdown-menu dropdown-menu-dark" data-select="takerAsset"></ul>
+                     <input type="text" id="takerAsset" class="form-control w-100 m-1" data-input="takerAssetDropdown" placeholder="Search">
+                     <ul id="takerAssetDropdown" class="dropdown-menu dropdown-menu-dark dataDropdown" data-dropdownasset="takerAsset"></ul>
                   </div>
                   <div class="form-group">
                      <span>
@@ -73,10 +73,9 @@
                </div>
             </form>
          </div>
-         <div class="d-flex justify-content-center m-2" id="animation"></div>
-         <div class="p-2" id="ordersSection"></div>
+         <div id="animation" class="d-flex justify-content-center m-2"></div>
+         <div id="ordersSection" class="p-2"></div>
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous" defer></script>
       <script type="module" src="dist/main.js" defer></script>
    </body>
 </html>
