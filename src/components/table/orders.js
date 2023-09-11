@@ -27,11 +27,12 @@ export async function loadTable() {
       return
    }
    const ordersApi = await response.json()
-   ordersSection.innerHTML = await tableHtml(ordersApi, chainId)
+   const chain = chains[chainId]
+   ordersSection.innerHTML = await tableHtml(ordersApi, chain, chainId)
    animation.innerHTML = ''
    const ordersDataTable = getDataTable(popEmptyBalancesBtn)
    ordersCount.textContent = `Found: ${ordersApi.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`
-   loadWalletDropdown(ordersApi)
+   loadWalletDropdown(ordersApi, chain.scanUrl)
 }
 
 async function getOrdersApi() {
@@ -50,9 +51,8 @@ async function getOrdersApi() {
    }
 }
 
-async function tableHtml(orders, chainId) {
-   const chain = chains[chainId]
-   const tokensInfo = await getTokensInfo(orders, chain)
+async function tableHtml(orders, chain, chainId) {
+   const tokensInfo = await getTokensInfo(orders, chain.rpcUrl)
    return `
    <table class="table table-striped table-dark" id="ordersTable">
       <thead class="thead-dark">

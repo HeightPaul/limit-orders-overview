@@ -1,8 +1,8 @@
 import {Contract, JsonRpcProvider} from 'ethers'
 
-export default async function getTokensInfo(orders, chain) {
+export default async function getTokensInfo(orders, chainRpcUrl) {
    try {
-      const provider = new JsonRpcProvider(chain.rpcUrl)
+      const provider = new JsonRpcProvider(chainRpcUrl)
       const addresses = uniqueTokens(orders)
       const nestedTokensInfo = await Promise.all(addresses.map(async(address) => await convertedFromAbi(address, provider)))
       return setKeys(nestedTokensInfo)

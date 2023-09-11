@@ -1,13 +1,15 @@
-function loadWalletDropdown(orders) {
+import {colorWallet} from '../cell/cell.js'
+
+function loadWalletDropdown(orders, chainScanUrl) {
    const uniqueWallets = [...new Set(orders.map(order => order.data.maker))]
    const searchColumn = document.querySelector('[data-columns="[0]"]')
    searchColumn.parentElement.classList.add('d-flex')
    searchColumn.insertAdjacentHTML('beforebegin', `
-      <input type="button" id="openWalletDropdown" class="btn btn-primary me-3" value="👛"/>
+      <input type="button" id="openWalletDropdown" class="btn btn-primary me-3" value="👛" title="Wallets"/>
       <div class="dropend">
          <ul id="walletDropdown" class="dropdown-menu dropdown-menu-dark dataDropdown">
          ${uniqueWallets.map(maker => `
-            <li class="dropdown-item">${maker.slice(0, 21)}...</li>
+            <li class="ms-1 me-1 d-flex"><span class="ms-1 me-1" data-pin>📌</span>${colorWallet(maker, chainScanUrl, 21)}</li>
             `).join('<li><hr class="dropdown-divider"></li>')}
          </ul>
       </div>
@@ -21,12 +23,16 @@ function dropdownHandlers(event) {
       document.querySelector('#walletDropdown').classList.toggle('show')
       return
    }
-   const li = event.target.closest('li')
-   if (li) {
-      const searchColumn = document.querySelector('[data-columns="[0]"]')
-      searchColumn.value = li.innerText
+
+   if (event.target.tagName === 'A') {
+      return
+   }
+   const pin = event.target.closest('[data-pin]')
+   if (pin) {
+      const searchWalletColumn = document.querySelector('[data-columns="[0]"]')
+      searchWalletColumn.value = pin.nextElementSibling.innerText
       const simulateInput = new InputEvent('input', {bubbles: true})
-      searchColumn.dispatchEvent(simulateInput)
+      searchWalletColumn.dispatchEvent(simulateInput)
       document.querySelector('#walletDropdown').classList.remove('show')
       return
    }

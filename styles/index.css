@@ -15,8 +15,16 @@
    overflow-y: auto;
 }
 
+.datatable-container{
+   overflow-x: auto;
+}
+
 .datatable-input{
    border-radius: 0.25rem;
+}
+
+[data-pin]{
+   cursor: pointer;
 }
 
 #chainImg{

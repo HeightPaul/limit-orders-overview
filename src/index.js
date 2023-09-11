@@ -27,7 +27,7 @@ document.querySelector('#ordersSection').addEventListener('click', dropdownHandl
 // Fillers
 loadChainIdSelect(chainIdSelect)
 fillFormBySearchParams()
+checkBtn.click()
 if (location.search) {
    loadChainLogo(chainIdSelect.value)
-   checkBtn.click()
 }

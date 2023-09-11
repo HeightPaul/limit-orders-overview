@@ -1,17 +1,21 @@
 import {formatToken} from '../../contracts/unit.js'
+import getHsl from '../../utils/coloring.js'
 import imageUrl from '../../utils/imageUrl.js'
-import {getHsl} from '../table/interactive.js'
 
-function maker(makerWalletAddress, balance, chainScanUrl, tokenInfo) {
+function maker(maker, balance, chainScanUrl, tokenInfo) {
    return `
       <td>
-         <a target="_blank" href="${chainScanUrl}/address/${makerWalletAddress}" class="text-decoration-none fw-light" style="color: ${getHsl(makerWalletAddress)};">${makerWalletAddress.slice(0, 30)}...</a>
+         ${colorWallet(maker, chainScanUrl, 30)}
          <div>
             <span class="balanceAmount">${parseFloat(formatToken(balance, tokenInfo.decimals)).toPrecision(8)}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
          </div>
       </td>
    `
+}
+
+function colorWallet(wallet, chainScanUrl, length) {
+   return `<a target="_blank" href="${chainScanUrl}/address/${wallet}" class="text-decoration-none fw-light" style="color: ${getHsl(wallet)};">${wallet.slice(0, length)}...</a>`
 }
 
 async function asset(address, amount, chain, tokenInfo) {
@@ -41,4 +45,4 @@ function rates(order, tokensInfo) {
    `
 }
 
-export {maker, asset, rates}
+export {maker, colorWallet, asset, rates}
