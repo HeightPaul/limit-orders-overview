@@ -32,7 +32,7 @@ async function convertedFromAbi(address, provider) {
       symbol = await tokenContract.symbol()
    } catch (error) {
       console.error(`${address} Symbol: ${error}`)
-      symbol = '<Error>'
+      symbol = 'Error!'
    }
    let decimals
    try {
@@ -44,7 +44,7 @@ async function convertedFromAbi(address, provider) {
    return {
       address: address,
       symbol: symbol,
-      decimals: decimals
+      decimals: decimals,
    }
 }
 

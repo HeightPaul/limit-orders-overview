@@ -5,15 +5,17 @@ import loadingHtml from './loading'
 
 const TOKENS_URL = 'https://tokens.1inch.io/v1.2'
 
-async function searchForTokenAddress() {
-   if (this.value) {
-      const assetSelect = document.querySelector(`#${this.dataset.input}`)
-      assetSelect.classList.add('show')
-      assetSelect.innerHTML = loadingHtml()
-      const chainId = getValue('chainId')
-      const tokens = await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${this.value}`)).json()
-      assetSelect.innerHTML = tokens.length ? await getTokensHtml(tokens, chains[chainId]) : '<div class="ms-2">No results</div>'
+async function searchForTokenAddress(event) {
+   const assetSelect = document.querySelector(`#${this.dataset.input}`)
+   if (!this.value || (event.type === 'click' && assetSelect.classList.contains('show'))) {
+      assetSelect.classList.remove('show')
+      return
    }
+   assetSelect.classList.add('show')
+   assetSelect.innerHTML = loadingHtml()
+   const chainId = getValue('chainId')
+   const tokens = await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${this.value}`)).json()
+   assetSelect.innerHTML = tokens.length ? await getTokensHtml(tokens, chains[chainId]) : '<div class="ms-2">No results</div>'
 }
 
 function chooseTokenFromDropdown(event) {
