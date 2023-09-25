@@ -1,11 +1,12 @@
 import chains from '../../configs/chains/chainList.json' assert {type: 'json'}
+import debounce from '../../utils/debounce'
 import imageUrl from '../../utils/imageUrl'
 import {getValue} from './fill'
 import loadingHtml from './loading'
 
 const TOKENS_URL = 'https://tokens.1inch.io/v1.2'
 
-async function searchForTokenAddress(event) {
+function searchForTokenAddress(event) {
    const assetSelect = document.querySelector(`#${this.dataset.input}`)
    if (!this.value || (event.type === 'click' && assetSelect.classList.contains('show'))) {
       assetSelect.classList.remove('show')
@@ -13,10 +14,14 @@ async function searchForTokenAddress(event) {
    }
    assetSelect.classList.add('show')
    assetSelect.innerHTML = loadingHtml()
-   const chainId = getValue('chainId')
-   const tokens = await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${this.value}`)).json()
-   assetSelect.innerHTML = tokens.length ? await getTokensHtml(tokens, chains[chainId]) : '<div class="ms-2">No results</div>'
+   debouncedSearch(assetSelect, this.value)
 }
+
+const debouncedSearch = debounce(async function(assetSelect, value) {
+   const chainId = getValue('chainId')
+   const tokens = await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${value}`)).json()
+   assetSelect.innerHTML = tokens.length ? await getTokensHtml(tokens, chains[chainId]) : '<div class="ms-2">No results</div>'
+})
 
 function chooseTokenFromDropdown(event) {
    if (event.target.tagName === 'A') {

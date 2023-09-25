@@ -4,14 +4,13 @@ import {toggleEmptyBalances} from './components/table/interactive.js'
 import {searchForTokenAddress, chooseTokenFromDropdown} from './components/form/search.js'
 import {dropdownHandlers} from './components/table/wallets.js'
 import {loadChainIdSelect,  changeChainLogo, loadChainLogo} from './configs/chains/chainConfigs.js'
-import debounce from './utils/debounce.js'
 
 // Event Listeners
 const checkBtn = document.querySelector('#checkBtn')
 checkBtn.addEventListener('click', loadTable)
 document.querySelectorAll('[data-input]').forEach(assetInput => {
-   assetInput.addEventListener('input', debounce(searchForTokenAddress))
-   assetInput.addEventListener('click', debounce(searchForTokenAddress))
+   assetInput.addEventListener('input', searchForTokenAddress)
+   assetInput.addEventListener('click', searchForTokenAddress)
 })
 document.querySelectorAll('[data-dropdownasset]').forEach(assetSelect => {
    assetSelect.addEventListener('click', chooseTokenFromDropdown)
