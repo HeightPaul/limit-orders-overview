@@ -19,7 +19,9 @@ Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 Command executions through the `pre-commit`
 
 ## 💡 Credits
-Expiration dates - [limit-order-parser](https://github.com/1inch/limit-order-parser)
+Expiration dates:
+- [limit-order-parser](https://github.com/1inch/limit-order-parser)
+- [limit-order-protocol-utils](https://github.com/1inch/limit-order-protocol-utils)
 
 ## 📚 API Docs 
 
