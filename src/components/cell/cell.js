@@ -7,7 +7,7 @@ function maker(maker, balance, chainScanUrl, tokenInfo) {
       <td>
          ${colorWallet(maker, chainScanUrl, 30)}
          <div>
-            <span class="balanceAmount">${parseFloat(formatToken(balance, tokenInfo.decimals)).toPrecision(8)}</span>
+            <span class="balanceAmount">${parseFloat(parseFloat(formatToken(balance, tokenInfo.decimals)).toFixed(8))}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
          </div>
       </td>
@@ -26,7 +26,7 @@ async function asset(address, amount, chain, tokenInfo) {
             <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1 ${image.isFilled ? '' : 'grayscale'}" src="${image.url}" alt="CT"/></a></div>
             <div>
                <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none text-light">${tokenInfo.symbol}</a></div>
-               <div class="text-secondary">${parseFloat(formatToken(amount, tokenInfo.decimals)).toPrecision(8)}</div>
+               <div class="text-secondary">${parseFloat(parseFloat(formatToken(amount, tokenInfo.decimals)).toFixed(8))}</div>
             </div>
          </div>
       </td>

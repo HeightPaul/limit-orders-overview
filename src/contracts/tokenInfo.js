@@ -1,5 +1,5 @@
 import {Contract, JsonRpcProvider} from 'ethers'
-import {fetchLatestPriceActions, searchCoinIds} from '../utils/coingecko'
+import {fetchLatestPriceActions, searchCoinIds} from '../utils/coinfeed'
 
 export const ERROR_MSG = 'Error!'
 

@@ -112,6 +112,6 @@ function priceCells(tokenInfo) {
 function currentPriceCell(tokenInfo) {
    return tokenInfo.current_price
       ? `<a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
-         ${tokenInfo.current_price ? `$${tokenInfo.current_price}` : ''}`
+         ${tokenInfo.current_price ? `$${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}`
       : ''
 }

@@ -1,4 +1,5 @@
 const ONE_INCH_API_DOMAIN = 'https://limit-orders.1inch.io'
+const V4 = '4.0'
 
 function getSelectedValues(htmlOptions) {
    return Array.from(htmlOptions)
@@ -7,7 +8,8 @@ function getSelectedValues(htmlOptions) {
 }
 
 function getLimitOrdersUrl(fields) {
-   const url = `${ONE_INCH_API_DOMAIN}/v${fields.appVersions}/${fields.chainId}/limit-order/${
+   const naming = fields.appVersions.includes(V4) ? '' : '/limit-order'
+   const url = `${ONE_INCH_API_DOMAIN}/v${fields.appVersions}/${fields.chainId}${naming}/${
       fields.walletAddress
          ? `address/${fields.walletAddress}`
          : 'all'
@@ -18,7 +20,7 @@ function getLimitOrdersUrl(fields) {
       limit: 100,
       makerAsset: fields.makerAsset,
       takerAsset: fields.takerAsset,
-      statuses: JSON.stringify(fields.statuses),
+      statuses: fields.appVersions.includes(V4) ? fields.statuses.join(',') : JSON.stringify(fields.statuses),
    })
 
    return `${url}?${params}`
