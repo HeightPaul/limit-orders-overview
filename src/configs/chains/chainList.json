@@ -24,6 +24,12 @@
       "scanUrl": "https://polygonscan.com",
       "rpcUrl": "https://1rpc.io/matic"
    },
+   "250": {
+      "name": "fantom",
+      "publicName": "Fantom",
+      "scanUrl": "https://ftmscan.com/",
+      "rpcUrl": "https://endpoints.omniatech.io/v1/fantom/mainnet/public"
+   },
    "324": {
       "name": "zksync-era",
       "publicName": "ZKSync Era",
