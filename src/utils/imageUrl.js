@@ -4,8 +4,8 @@ export default async function imageUrl(address, chain) {
    const zapperUrl = `${ZAPPER_FI_URL}/${chain.name}/${address}.png`
    const zapperResponse = await fetch(zapperUrl)
    if (zapperResponse.ok) {
-      return zapperUrl
+      return {url: zapperUrl, isFilled: true}
    }
 
-   return `${chain.scanUrl}/images/main/empty-token.png`
+   return {url: `${ZAPPER_FI_URL}/${chain.name}/0x0000000000000000000000000000000000000000.png`, isFilled: false}
 }

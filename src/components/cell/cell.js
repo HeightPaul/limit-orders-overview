@@ -19,10 +19,11 @@ function colorWallet(wallet, chainScanUrl, length) {
 }
 
 async function asset(address, amount, chain, tokenInfo) {
+   const image = await imageUrl(address, chain)
    return `
       <td>
          <div class="d-flex flex-wrap">
-            <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1" src="${await imageUrl(address, chain)}" alt="CT"/></a></div>
+            <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1 ${image.isFilled ? '' : 'grayscale'}" src="${image.url}" alt="CT"/></a></div>
             <div>
                <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none text-light">${tokenInfo.symbol}</a></div>
                <div class="text-secondary">${parseFloat(formatToken(amount, tokenInfo.decimals)).toPrecision(8)}</div>

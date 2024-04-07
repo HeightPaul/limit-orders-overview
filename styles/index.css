@@ -35,3 +35,11 @@
    height: 1.3rem;
    width: 1.3rem;
 }
+
+.grayscale{
+   filter: grayscale(100%);
+}
+
+.coingeckoIcon{
+   width: 1rem;
+}

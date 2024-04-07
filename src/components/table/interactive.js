@@ -58,7 +58,8 @@ function setSearchColumns(_data, table, type) {
                      'data-columns': `[${index}]`,
                   }
                }
-            ]})
+            ]}
+         )
       )
    }
    tHead.childNodes.push(filterHeaders)

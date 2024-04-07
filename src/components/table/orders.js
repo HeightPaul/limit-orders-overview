@@ -2,7 +2,7 @@ import {getValue} from '../form/fill.js'
 import loadingHtml from '../form/loading.js'
 import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../configs/configs.js'
 import expiration from '../../contracts/orders/expiration.js'
-import getTokensInfo from '../../contracts/abiTokenInfo.js'
+import getTokensInfo from '../../contracts/tokenInfo.js'
 import {maker, asset, rates} from '../cell/cell.js'
 import chains from '../../configs/chains/chainList.json' assert {type: 'json'}
 import {getDataTable} from './interactive.js'
@@ -63,23 +63,55 @@ async function tableHtml(orders, chain, chainId) {
             <th scope="col">Order Rates</th>
             <th scope="col">Creation</th>
             <th scope="col">Expiration</th>
+            <th scope="col">Sell - Current Price</th>
+            <th scope="col">24 Hours</th>
+            <th scope="col">30 Days Days</th>
+            <th scope="col">Buy - Current Price</th>
+            <th scope="col">24 Hours</th>
+            <th scope="col">30 Days Days</th>
          </tr>
       </thead>
       <tbody>
       ${(await Promise.all(orders.map(async(order) => {
       const expire = parseInt(expiration(order.data, chainId))
+      const makerTokenInfo = tokensInfo[order.data.makerAsset]
+      const takerTokenInfo = tokensInfo[order.data.takerAsset]
       return `
          <tr>
-            ${maker(order.data.maker, order.makerBalance, chain.scanUrl, tokensInfo[order.data.makerAsset])}
-            ${await asset(order.data.makerAsset, order.data.makingAmount, chain, tokensInfo[order.data.makerAsset])}
-            ${await asset(order.data.takerAsset, order.data.takingAmount, chain, tokensInfo[order.data.takerAsset])}
+            ${maker(order.data.maker, order.makerBalance, chain.scanUrl, makerTokenInfo)}
+            ${await asset(order.data.makerAsset, order.data.makingAmount, chain, makerTokenInfo)}
+            ${await asset(order.data.takerAsset, order.data.takingAmount, chain, takerTokenInfo)}
             ${rates(order, tokensInfo)}
             <td>${getFormattedDateTime(order.createDateTime)}</td>
             <td>${expire ? getFormattedDateTime(expire * 1000) : ''}</td>
+            ${priceCells(makerTokenInfo)}
+            ${priceCells(takerTokenInfo)}
          </tr>
       `
    }))).join('')}
       </tbody>
    </table>
    `
+}
+
+function priceCells(tokenInfo) {
+   return `
+      <td>${currentPriceCell(tokenInfo)}</td>
+      <td>
+         <span class="${tokenInfo.price_change_percentage_24h >= 0 ? 'text-success' : 'text-danger'}">
+            ${tokenInfo.price_change_percentage_24h ? `${tokenInfo.price_change_percentage_24h}%` : ''}
+         </span>
+      </td>
+      <td>
+         <span class="${tokenInfo.price_change_percentage_30d >= 0 ? 'text-success' : 'text-danger'}">
+            ${tokenInfo.price_change_percentage_30d ? `${tokenInfo.price_change_percentage_30d}%` : ''}
+         </span>
+      </td>
+   `
+}
+function currentPriceCell(tokenInfo) {
+   return tokenInfo.current_price
+      ? `<a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
+         ${tokenInfo.current_price ? `$${tokenInfo.current_price}` : ''}`
+      : ''
 }

@@ -20,3 +20,8 @@ Command executions through the `pre-commit`
 
 ## 💡 Credits
 Expiration dates - [limit-order-parser](https://github.com/1inch/limit-order-parser)
+
+## 📚 API Docs 
+
+- [CoinGecko](https://www.coingecko.com/api/documentation)
+- [1Inch](https://docs.1inch.io/docs/limit-order-protocol/api)

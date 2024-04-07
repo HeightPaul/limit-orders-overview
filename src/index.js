@@ -20,6 +20,9 @@ const chainIdSelect = document.querySelector('#chainId')
 chainIdSelect.addEventListener('change', changeChainLogo)
 document.querySelector('#sendPageSearchParams').addEventListener('click', sendPageSearchParamsByForm)
 document.querySelector('#clearForm').addEventListener('click', clearForm)
+document.querySelector('#clearLocalStorage').addEventListener('click', function() {
+   localStorage.clear()
+})
 document.querySelector('#popEmptyBalances').addEventListener('click', toggleEmptyBalances)
 document.querySelector('#ordersSection').addEventListener('click', dropdownHandlers)
 

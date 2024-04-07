@@ -36,15 +36,18 @@ function chooseTokenFromDropdown(event) {
 }
 
 async function getTokensHtml(tokens, chain) {
-   return (await Promise.all(tokens.map(async token => `
-      <li class="dropdown-item d-flex flex-wrap">
-         <div><img class="tokenIcon m-1 me-2" src="${await imageUrl(token.address, chain)}" alt="CT"/></div>
-         <div>
-            <div>${token.name} | ${token.symbol}</div>
-            <a target="_blank" href="${chain.scanUrl}/address/${token.address}" class="fw-light text-light text-decoration-none" data-address>${token.address}</a>
-         </div>
-      </li>
-   `))).join('<li><hr class="dropdown-divider"></li>')
+   return (await Promise.all(tokens.map(async token => {
+      const image = await imageUrl(token.address, chain)
+      return `
+         <li class="dropdown-item d-flex flex-wrap">
+            <div><img class="tokenIcon m-1 me-2 ${image.isFilled ? '' : 'grayscale'}" src="${image.url}" alt="CT"/></div>
+            <div>
+               <div>${token.name} | ${token.symbol}</div>
+               <a target="_blank" href="${chain.scanUrl}/address/${token.address}" class="fw-light text-light text-decoration-none" data-address>${token.address}</a>
+            </div>
+         </li>
+      `
+   }))).join('<li><hr class="dropdown-divider"></li>')
 }
 
 export {searchForTokenAddress, chooseTokenFromDropdown}
