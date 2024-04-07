@@ -69,6 +69,7 @@ async function tableHtml(orders, chain, chainId) {
             <th scope="col">Buy - Current Price</th>
             <th scope="col">24 Hours</th>
             <th scope="col">30 Days Days</th>
+            <th scope="col">Current Rates</th>
          </tr>
       </thead>
       <tbody>
@@ -76,6 +77,8 @@ async function tableHtml(orders, chain, chainId) {
       const expire = parseInt(expiration(order.data, chainId))
       const makerTokenInfo = tokensInfo[order.data.makerAsset]
       const takerTokenInfo = tokensInfo[order.data.takerAsset]
+      const makerTokenPrice = parseFloat(makerTokenInfo.current_price)
+      const takerTokenPrice = parseFloat(takerTokenInfo.current_price)
       return `
          <tr>
             ${maker(order.data.maker, order.makerBalance, chain.scanUrl, makerTokenInfo)}
@@ -86,6 +89,13 @@ async function tableHtml(orders, chain, chainId) {
             <td>${expire ? getFormattedDateTime(expire * 1000) : ''}</td>
             ${priceCells(makerTokenInfo)}
             ${priceCells(takerTokenInfo)}
+            <td>
+               ${makerTokenInfo.current_price && takerTokenInfo.current_price ? `
+               <div>
+                  <div>${(makerTokenPrice / takerTokenPrice).toFixed(5)}</div>
+                  <div class="text-secondary">${(takerTokenPrice / makerTokenPrice).toFixed(5)}</div>
+               </div>`: ''}
+            </td>
          </tr>
       `
    }))).join('')}
@@ -96,7 +106,10 @@ async function tableHtml(orders, chain, chainId) {
 
 function priceCells(tokenInfo) {
    return `
-      <td>${currentPriceCell(tokenInfo)}</td>
+      <td>${tokenInfo.current_price ? `
+         <a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
+         $${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}
+      </td>
       <td>
          <span class="${tokenInfo.price_change_percentage_24h >= 0 ? 'text-success' : 'text-danger'}">
             ${tokenInfo.price_change_percentage_24h ? `${tokenInfo.price_change_percentage_24h}%` : ''}
@@ -108,10 +121,4 @@ function priceCells(tokenInfo) {
          </span>
       </td>
    `
-}
-function currentPriceCell(tokenInfo) {
-   return tokenInfo.current_price
-      ? `<a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
-         ${tokenInfo.current_price ? `$${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}`
-      : ''
 }
