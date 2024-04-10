@@ -1,4 +1,4 @@
-import chains from './chainList.json' assert {type: 'json'}
+import chains from './chainList.json'
 
 const ETH_INDEX = 0
 const CHAIN_LOGO_URL = 'https://app.1inch.io/assets/images/network-logos'

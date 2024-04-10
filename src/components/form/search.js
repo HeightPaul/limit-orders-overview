@@ -1,4 +1,4 @@
-import chains from '../../configs/chains/chainList.json' assert {type: 'json'}
+import chains from '../../configs/chains/chainList.json'
 import debounce from '../../utils/debounce'
 import imageUrl from '../../utils/imageUrl'
 import {getValue} from './fill'

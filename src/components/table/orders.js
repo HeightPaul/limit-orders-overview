@@ -4,7 +4,7 @@ import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../
 import expiration from '../../contracts/orders/expiration.js'
 import getTokensInfo from '../../contracts/tokenInfo.js'
 import {maker, asset, rates} from '../cell/cell.js'
-import chains from '../../configs/chains/chainList.json' assert {type: 'json'}
+import chains from '../../configs/chains/chainList.json'
 import {getDataTable} from './interactive.js'
 import {loadWalletDropdown} from './wallets.js'
 
@@ -35,41 +35,25 @@ export async function loadTable() {
    loadWalletDropdown(ordersApi, chain.scanUrl)
 }
 
-async function getOrdersApi() {
-   const fields = {
-      makerAsset: getValue('makerAsset'),
-      takerAsset: getValue('takerAsset'),
-      walletAddress: getValue('walletAddress'),
-      chainId: getValue('chainId'),
-      statuses: getSelectedValues(document.querySelector('#statuses').options),
-      appVersions: getSelectedValues(document.querySelector('#appVersions').options),
-   }
-   const response = await fetch(getLimitOrdersUrl(fields))
-   return {
-      response: response,
-      chainId: fields.chainId,
-   }
-}
-
 async function tableHtml(orders, chain, chainId) {
    const tokensInfo = await getTokensInfo(orders, chain.rpcUrl)
    return `
    <table class="table table-striped table-dark" id="ordersTable">
-      <thead class="thead-dark">
+      <thead class="text-nowrap">
          <tr>
             <th scope="col">Address|Balance</th>
             <th scope="col">Sell</th>
             <th scope="col">Buy</span></th>
-            <th scope="col">Order Rates</th>
+            <th scope="col">Rates</th>
             <th scope="col">Creation</th>
             <th scope="col">Expiration</th>
-            <th scope="col">Sell - Current Price</th>
-            <th scope="col">24 Hours</th>
-            <th scope="col">30 Days Days</th>
-            <th scope="col">Buy - Current Price</th>
-            <th scope="col">24 Hours</th>
-            <th scope="col">30 Days Days</th>
-            <th scope="col">Current Rates</th>
+            <th scope="col">Sell</th>
+            <th scope="col">24H</th>
+            <th scope="col">30D</th>
+            <th scope="col">Buy</th>
+            <th scope="col">24H</th>
+            <th scope="col">30D</th>
+            <th scope="col">Rates</th>
          </tr>
       </thead>
       <tbody>
@@ -107,8 +91,10 @@ async function tableHtml(orders, chain, chainId) {
 function priceCells(tokenInfo) {
    return `
       <td>${tokenInfo.current_price ? `
-         <a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
-         $${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}
+         <span class="text-nowrap">
+            <a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
+            $${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}
+         </span>
       </td>
       <td>
          <span class="${tokenInfo.price_change_percentage_24h >= 0 ? 'text-success' : 'text-danger'}">
@@ -121,4 +107,20 @@ function priceCells(tokenInfo) {
          </span>
       </td>
    `
+}
+
+async function getOrdersApi() {
+   const fields = {
+      makerAsset: getValue('makerAsset'),
+      takerAsset: getValue('takerAsset'),
+      walletAddress: getValue('walletAddress'),
+      chainId: getValue('chainId'),
+      statuses: getSelectedValues(document.querySelector('#statuses').options),
+      appVersions: getSelectedValues(document.querySelector('#appVersions').options),
+   }
+   const response = await fetch(getLimitOrdersUrl(fields))
+   return {
+      response: response,
+      chainId: fields.chainId,
+   }
 }

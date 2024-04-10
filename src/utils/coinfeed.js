@@ -20,7 +20,7 @@ async function searchCoinIds(tokens) {
          if (matchingCoinsBySymbol.length > 1) {
             const matchingCoinsByName = matchingCoinsBySymbol.filter(coin => coin.name.includes(searchToken.name) || searchToken.name.includes(coin.name))
 
-            coinIds.push(matchingCoinsByName[0]?.id || matchingCoinsBySymbol[0].id)
+            coinIds.push(matchingCoinsByName[0]?.id ?? matchingCoinsBySymbol[0].id)
          } else {
             coinIds.push(matchingCoinsBySymbol[0].id)
          }

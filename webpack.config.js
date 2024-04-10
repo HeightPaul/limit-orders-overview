@@ -17,20 +17,6 @@ module.exports = () => {
       watchOptions: {
          aggregateTimeout: 8000,
       },
-      module: {
-         rules: [
-            {
-               test: /\.js$/,
-               exclude: /node_modules/,
-               use: {
-                  loader: 'babel-loader',
-                  options: {
-                     plugins: ['@babel/plugin-syntax-dynamic-import'],
-                  },
-               },
-            },
-         ],
-      },
       plugins: [
          new NodePolyfillPlugin()
       ]
