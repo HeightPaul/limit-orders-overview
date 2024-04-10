@@ -11,7 +11,7 @@ export default async function getTokensInfo(orders, chainRpcUrl) {
       const priceActions = await fetchLatestPriceActions(await searchCoinIds(tokens))
       return prepareSet(tokens, priceActions)
    } catch (error) {
-      alert('Check JsonRpc error in console.')
+      alert('Check error in console.')
       throw error
    }
 }
