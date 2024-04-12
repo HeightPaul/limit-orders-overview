@@ -7,7 +7,7 @@
 }
 
 .tokenIcon{
-   width: 2.5rem;
+   width: 2.4rem;
 }
 
 .dataDropdown{
@@ -17,6 +17,12 @@
 
 .datatable-container{
    overflow-x: auto;
+}
+
+.datatable-sorter::before,
+.datatable-sorter::after
+{
+   border-color: white;
 }
 
 .datatable-input{

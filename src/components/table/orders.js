@@ -1,12 +1,10 @@
 import {getValue} from '../form/fill.js'
 import loadingHtml from '../form/loading.js'
-import {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime} from '../../configs/configs.js'
-import expiration from '../../contracts/orders/expiration.js'
-import getTokensInfo from '../../contracts/tokenInfo.js'
-import {maker, asset, rates} from '../cell/cell.js'
+import {getSelectedValues, getLimitOrdersUrl} from '../../configs/configs.js'
 import chains from '../../configs/chains/chainList.json'
 import {getDataTable} from './interactive.js'
-import {loadWalletDropdown} from './wallets.js'
+import {loadWalletDropdown} from './head/wallets.js'
+import {tableHtml} from './table.js'
 
 export async function loadTable() {
    const animation = document.querySelector('#animation')
@@ -33,80 +31,6 @@ export async function loadTable() {
    const ordersDataTable = getDataTable(popEmptyBalancesBtn)
    ordersCount.textContent = `Found: ${ordersApi.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`
    loadWalletDropdown(ordersApi, chain.scanUrl)
-}
-
-async function tableHtml(orders, chain, chainId) {
-   const tokensInfo = await getTokensInfo(orders, chain.rpcUrl)
-   return `
-   <table class="table table-striped table-dark" id="ordersTable">
-      <thead class="text-nowrap">
-         <tr>
-            <th scope="col">Address|Balance</th>
-            <th scope="col">Sell</th>
-            <th scope="col">Buy</span></th>
-            <th scope="col">Rates</th>
-            <th scope="col">Creation</th>
-            <th scope="col">Expiration</th>
-            <th scope="col">Sell</th>
-            <th scope="col">24H</th>
-            <th scope="col">30D</th>
-            <th scope="col">Buy</th>
-            <th scope="col">24H</th>
-            <th scope="col">30D</th>
-            <th scope="col">Rates</th>
-         </tr>
-      </thead>
-      <tbody>
-      ${(await Promise.all(orders.map(async(order) => {
-      const expire = parseInt(expiration(order.data, chainId))
-      const makerTokenInfo = tokensInfo[order.data.makerAsset]
-      const takerTokenInfo = tokensInfo[order.data.takerAsset]
-      const makerTokenPrice = parseFloat(makerTokenInfo.current_price)
-      const takerTokenPrice = parseFloat(takerTokenInfo.current_price)
-      return `
-         <tr>
-            ${maker(order.data.maker, order.makerBalance, chain.scanUrl, makerTokenInfo)}
-            ${await asset(order.data.makerAsset, order.data.makingAmount, chain, makerTokenInfo)}
-            ${await asset(order.data.takerAsset, order.data.takingAmount, chain, takerTokenInfo)}
-            ${rates(order, tokensInfo)}
-            <td>${getFormattedDateTime(order.createDateTime)}</td>
-            <td>${expire ? getFormattedDateTime(expire * 1000) : ''}</td>
-            ${priceCells(makerTokenInfo)}
-            ${priceCells(takerTokenInfo)}
-            <td>
-               ${makerTokenInfo.current_price && takerTokenInfo.current_price ? `
-               <div>
-                  <div>${(makerTokenPrice / takerTokenPrice).toFixed(5)}</div>
-                  <div class="text-secondary">${(takerTokenPrice / makerTokenPrice).toFixed(5)}</div>
-               </div>`: ''}
-            </td>
-         </tr>
-      `
-   }))).join('')}
-      </tbody>
-   </table>
-   `
-}
-
-function priceCells(tokenInfo) {
-   return `
-      <td>${tokenInfo.current_price ? `
-         <span class="text-nowrap">
-            <a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="https://avatars.githubusercontent.com/u/7111837?s=280&v=4"/></a>
-            $${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}
-         </span>
-      </td>
-      <td>
-         <span class="${tokenInfo.price_change_percentage_24h >= 0 ? 'text-success' : 'text-danger'}">
-            ${tokenInfo.price_change_percentage_24h ? `${tokenInfo.price_change_percentage_24h}%` : ''}
-         </span>
-      </td>
-      <td>
-         <span class="${tokenInfo.price_change_percentage_30d >= 0 ? 'text-success' : 'text-danger'}">
-            ${tokenInfo.price_change_percentage_30d ? `${tokenInfo.price_change_percentage_30d}%` : ''}
-         </span>
-      </td>
-   `
 }
 
 async function getOrdersApi() {
