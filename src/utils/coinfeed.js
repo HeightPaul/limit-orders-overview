@@ -15,15 +15,14 @@ async function searchCoinIds(tokens) {
       const searchTokens = tokens.filter(token => token.symbol !== ERROR_MSG)
       for (const searchToken of searchTokens) {
          const matchingCoinsBySymbol = coins.filter(coin => coin.symbol.toLowerCase() === searchToken.symbol.toLowerCase())
-         if (!matchingCoinsBySymbol[0]?.id) continue
+         let firstMatchId = matchingCoinsBySymbol[0]?.id
+         if (!firstMatchId) continue
 
          if (matchingCoinsBySymbol.length > 1) {
             const matchingCoinsByName = matchingCoinsBySymbol.filter(coin => coin.name.includes(searchToken.name) || searchToken.name.includes(coin.name))
-
-            coinIds.push(matchingCoinsByName[0]?.id ?? matchingCoinsBySymbol[0].id)
-         } else {
-            coinIds.push(matchingCoinsBySymbol[0].id)
+            firstMatchId = matchingCoinsByName[0]?.id ?? firstMatchId
          }
+         coinIds.push(firstMatchId)
       }
 
       return coinIds
