@@ -1,6 +1,6 @@
-import {formatToken} from '../../../contracts/unit'
-import getHsl from '../../../utils/coloring'
-import imageUrl from '../../../utils/imageUrl'
+import {formatToken} from '../../../../contracts/unit'
+import getHsl from '../../../../utils/coloring'
+import imageUrl from '../../../../utils/imageUrl'
 
 const COINGECKO_ICON_URL = 'https://avatars.githubusercontent.com/u/7111837?s=280&v=4'
 

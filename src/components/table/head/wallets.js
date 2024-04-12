@@ -1,4 +1,4 @@
-import {colorWallet} from '../rows/cell'
+import {colorWallet} from '../rows/cell/cell'
 
 function loadWalletDropdown(orders, chainScanUrl) {
    const uniqueWallets = [...new Set(orders.map(order => order.data.maker))]

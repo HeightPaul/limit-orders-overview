@@ -1,6 +1,6 @@
 
 import {getFormattedDateTime} from '../../configs/configs'
-import {maker, asset, orderRates, prices, currentRates, updateNumberColors} from './rows/cell'
+import {maker, asset, orderRates, prices, currentRates, updateNumberColors} from './rows/cell/cell'
 import expiration from '../../contracts/orders/expiration'
 import getTokensInfo from '../../contracts/tokenInfo'
 import {dropdownHandlers} from './head/wallets'
