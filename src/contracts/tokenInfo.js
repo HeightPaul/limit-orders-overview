@@ -1,15 +1,16 @@
 import {Contract, JsonRpcProvider} from 'ethers'
 import {fetchLatestPriceActions, searchCoinIds} from '../utils/coinfeed'
+import imageUrl from '../utils/imageUrl'
 
 export const ERROR_MSG = 'Error!'
 
-export default async function getTokensInfo(orders, chainRpcUrl) {
+export default async function getTokensInfo(orders, chain) {
    try {
-      const provider = new JsonRpcProvider(chainRpcUrl)
+      const provider = new JsonRpcProvider(chain.rpcUrl)
       const addresses = uniqueTokens(orders)
       const tokens = await Promise.all(addresses.map(async(address) => await convertedFromAbi(address, provider)))
       const priceActions = await fetchLatestPriceActions(await searchCoinIds(tokens))
-      return prepareSet(tokens, priceActions)
+      return await prepareSet(tokens, priceActions, chain.name)
    } catch (error) {
       alert('Check error in console.')
       throw error
@@ -63,17 +64,17 @@ async function convertedFromAbi(address, provider) {
    }
 }
 
-function prepareSet(tokens, priceActions) {
+async function prepareSet(tokens, priceActions, chainName) {
    const tokensInfo = {}
    for (const token of tokens) {
       const address = token.address
       delete token.address
       tokensInfo[address] = token
-
+      tokensInfo[address].image = await imageUrl(address, chainName)
       for (const priceAction of priceActions) {
          if (tokensInfo[address].symbol.toLowerCase() == priceAction.symbol) {
-            tokensInfo[address].current_price = priceAction.current_price
             tokensInfo[address].price_id = priceAction.id
+            tokensInfo[address].current_price = parseFloat(priceAction.current_price)
             tokensInfo[address].price_change_percentage_24h = priceAction.price_change_percentage_24h?.toFixed(2)
             tokensInfo[address].price_change_percentage_30d = priceAction.price_change_percentage_30d_in_currency?.toFixed(2)
             break

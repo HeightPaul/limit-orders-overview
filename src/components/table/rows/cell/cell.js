@@ -1,6 +1,5 @@
 import {formatToken} from '../../../../contracts/unit'
 import getHsl from '../../../../utils/coloring'
-import imageUrl from '../../../../utils/imageUrl'
 
 const COINGECKO_ICON_URL = 'https://avatars.githubusercontent.com/u/7111837?s=280&v=4'
 
@@ -20,12 +19,11 @@ function colorWallet(wallet, chainScanUrl, length) {
    return `<a target="_blank" href="${chainScanUrl}/address/${wallet}" class="text-decoration-none fw-light" style="color: ${getHsl(wallet)};">${wallet.slice(0, length)}...</a>`
 }
 
-async function asset(address, amount, chain, tokenInfo) {
-   const image = await imageUrl(address, chain)
+function asset(address, amount, chain, tokenInfo) {
    return `
       <td>
          <div class="d-flex flex-wrap">
-            <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1 ${image.isFilled ? '' : 'grayscale'}" src="${image.url}" alt="CT"/></a></div>
+            <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1 ${tokenInfo.image.isFilled ? '' : 'grayscale'}" src="${tokenInfo.image.url}" alt="CT"/></a></div>
             <div>
                <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none text-light">${tokenInfo.symbol}</a></div>
                <div class="text-secondary">${parseFloat(parseFloat(formatToken(amount, tokenInfo.decimals)).toFixed(8))}</div>
@@ -62,14 +60,12 @@ function prices(tokenInfo) {
 }
 
 function currentRates(makerTokenInfo, takerTokenInfo) {
-   const makerTokenPrice = parseFloat(makerTokenInfo.current_price)
-   const takerTokenPrice = parseFloat(takerTokenInfo.current_price)
    return `
       <td>
          ${makerTokenInfo.current_price && takerTokenInfo.current_price ? `
          <div>
-            <div>${(makerTokenPrice / takerTokenPrice).toFixed(5)}</div>
-            <div class="text-secondary">${(takerTokenPrice / makerTokenPrice).toFixed(5)}</div>
+            <div>${(makerTokenInfo.current_price / takerTokenInfo.current_price).toFixed(5)}</div>
+            <div class="text-secondary">${(takerTokenInfo.current_price / makerTokenInfo.current_price).toFixed(5)}</div>
          </div>`: ''}
       </td>
    `

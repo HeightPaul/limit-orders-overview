@@ -6,7 +6,7 @@ import getTokensInfo from '../../contracts/tokenInfo'
 import {dropdownHandlers} from './head/wallets'
 
 async function tableHtml(orders, chain, chainId) {
-   const tokensInfo = await getTokensInfo(orders, chain.rpcUrl)
+   const tokensInfo = await getTokensInfo(orders, chain)
    return `
    <table class="table table-striped table-dark" id="ordersTable">
       <thead>
@@ -27,15 +27,15 @@ async function tableHtml(orders, chain, chainId) {
          </tr>
       </thead>
       <tbody>
-      ${(await Promise.all(orders.map(async(order) => {
+      ${(await Promise.all(orders.map(order => {
       const expire = parseInt(expiration(order.data, chainId))
       const makerTokenInfo = tokensInfo[order.data.makerAsset]
       const takerTokenInfo = tokensInfo[order.data.takerAsset]
       return `
          <tr>
             ${maker(order.data.maker, order.makerBalance, chain.scanUrl, makerTokenInfo)}
-            ${await asset(order.data.makerAsset, order.data.makingAmount, chain, makerTokenInfo)}
-            ${await asset(order.data.takerAsset, order.data.takingAmount, chain, takerTokenInfo)}
+            ${asset(order.data.makerAsset, order.data.makingAmount, chain, makerTokenInfo)}
+            ${asset(order.data.takerAsset, order.data.takingAmount, chain, takerTokenInfo)}
             ${orderRates(order, tokensInfo)}
             <td>${getFormattedDateTime(order.createDateTime)}</td>
             <td>${expire ? getFormattedDateTime(expire * 1000) : ''}</td>

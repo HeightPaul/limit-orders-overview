@@ -1,11 +1,13 @@
 import {ERROR_MSG} from '../contracts/tokenInfo'
 
+const COINS_API = 'https://api.coingecko.com/api/v3/coins'
+
 async function searchCoinIds(tokens) {
    const coinIds = []
    try {
       let coins = localStorage.getItem('coins')
       if (!coins) {
-         const response = await fetch('https://api.coingecko.com/api/v3/coins/list')
+         const response = await fetch(`${COINS_API}/list`)
          coins = await response.json()
          localStorage.setItem('coins', JSON.stringify(coins))
       } else {
@@ -34,7 +36,7 @@ async function searchCoinIds(tokens) {
 
 async function fetchLatestPriceActions(coinIds) {
    try {
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&price_change_percentage=30d`)
+      const response = await fetch(`${COINS_API}/markets?vs_currency=usd&ids=${coinIds.join(',')}&price_change_percentage=30d`)
       const data = await response.json()
       return data
    } catch (error) {
