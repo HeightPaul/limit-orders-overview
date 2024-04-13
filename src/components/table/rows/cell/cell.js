@@ -1,4 +1,4 @@
-import {formatToken} from '../../../../contracts/unit'
+import {formatUnits} from 'ethers'
 import getHsl from '../../../../utils/coloring'
 
 const COINGECKO_ICON_URL = 'https://avatars.githubusercontent.com/u/7111837?s=280&v=4'
@@ -8,7 +8,7 @@ function maker(maker, balance, chainScanUrl, tokenInfo) {
       <td>
          ${colorWallet(maker, chainScanUrl, 30)}
          <div>
-            <span class="balanceAmount">${parseFloat(parseFloat(formatToken(balance, tokenInfo.decimals)).toFixed(8))}</span>
+            <span class="balanceAmount">${parseFloat(parseFloat(formatUnits(balance, tokenInfo.decimals)).toFixed(8))}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
          </div>
       </td>
@@ -26,7 +26,7 @@ function asset(address, amount, chain, tokenInfo) {
             <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1 ${tokenInfo.image.isFilled ? '' : 'grayscale'}" src="${tokenInfo.image.url}" alt="CT"/></a></div>
             <div>
                <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none text-light">${tokenInfo.symbol}</a></div>
-               <div class="text-secondary">${parseFloat(parseFloat(formatToken(amount, tokenInfo.decimals)).toFixed(8))}</div>
+               <div class="text-secondary">${parseFloat(parseFloat(formatUnits(amount, tokenInfo.decimals)).toFixed(8))}</div>
             </div>
          </div>
       </td>
@@ -34,8 +34,8 @@ function asset(address, amount, chain, tokenInfo) {
 }
 
 function orderRates(order, tokensInfo) {
-   const formattedMakerAmount = parseFloat(formatToken(order.data.makingAmount, tokensInfo[order.data.makerAsset].decimals))
-   const formattedTakerAmount = parseFloat(formatToken(order.data.takingAmount, tokensInfo[order.data.takerAsset].decimals))
+   const formattedMakerAmount = parseFloat(formatUnits(order.data.makingAmount, tokensInfo[order.data.makerAsset].decimals))
+   const formattedTakerAmount = parseFloat(formatUnits(order.data.takingAmount, tokensInfo[order.data.takerAsset].decimals))
    return `
       <td>
          <div>
