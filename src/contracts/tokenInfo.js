@@ -72,7 +72,7 @@ async function prepareSet(tokens, priceActions, chainName) {
       tokensInfo[address] = token
       tokensInfo[address].image = await imageUrl(address, chainName)
       for (const priceAction of priceActions) {
-         if (tokensInfo[address].symbol.toLowerCase() == priceAction.symbol) {
+         if (tokensInfo[address].symbol.toLowerCase() === priceAction.symbol) {
             Object.assign(tokensInfo[address], {
                price_id: priceAction.id,
                current_price: parseFloat(priceAction.current_price),
