@@ -8,7 +8,7 @@ Base layer for analysis of DEX Aggregator and Limit Orders Protocol, 1Inch.
 
 ## 👣 Steps
 
-### Instalation
+### Installation
 1. Add `NodeJS` and `npm`
 2. `npm run conf`
 3. `npm install`
