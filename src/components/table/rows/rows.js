@@ -10,14 +10,24 @@ function getEmptyRows() {
    return emptyRows
 }
 
-function toggleEmptyBalances() {
+function toggleEmptyBalances(event) {
    const emptyRows = getEmptyRows()
    if (emptyRows.length) {
-      const showEmpty = this.innerText === '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
-      this.innerText = showEmpty ? '🏳️' : '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
-      emptyRows.forEach(emptyRow => {
-         emptyRow.style.display = showEmpty ? '' : 'none'
-      })
+      const showEmpty = getShowEmpty(event.srcElement)
+      this.innerText = showEmpty ? '🏴󠁧󠁢󠁥󠁮󠁧󠁿':  '🏳️'
+      this.title = showEmpty ? 'Show empty wallet balances!': 'Hide empty wallet balances!'
+      updateShowingEmptyBalances(emptyRows, !showEmpty)
    }
 }
-export {getEmptyRows, toggleEmptyBalances}
+
+function getShowEmpty(input) {
+   return input.innerText === '🏳️'
+}
+
+function updateShowingEmptyBalances(emptyRows, showEmpty) {
+   emptyRows.forEach(emptyRow => {
+      emptyRow.style.display = showEmpty ? '' : 'none'
+   })
+}
+
+export {getEmptyRows, toggleEmptyBalances, getShowEmpty, updateShowingEmptyBalances}

@@ -1,6 +1,7 @@
 import {ERROR_MSG} from '../contracts/tokenInfo'
 
 const COINS_API = 'https://api.coingecko.com/api/v3/coins'
+const COINS_STORAGE_KEY = 'coins'
 
 async function searchCoinIds(tokens) {
    const coinIds = []
@@ -9,7 +10,7 @@ async function searchCoinIds(tokens) {
       if (!coins) {
          const response = await fetch(`${COINS_API}/list`)
          coins = await response.json()
-         localStorage.setItem('coins', JSON.stringify(coins))
+         localStorage.setItem(COINS_STORAGE_KEY, JSON.stringify(coins))
       } else {
          coins = JSON.parse(coins)
       }
@@ -45,4 +46,8 @@ async function fetchLatestPriceActions(coinIds) {
    }
 }
 
-export {searchCoinIds, fetchLatestPriceActions}
+function clearLocalStorageCoins() {
+   localStorage.removeItem(COINS_STORAGE_KEY)
+}
+
+export {searchCoinIds, fetchLatestPriceActions, clearLocalStorageCoins}

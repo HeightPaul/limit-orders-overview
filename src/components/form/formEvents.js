@@ -3,6 +3,7 @@ import {changeOnAllAddresses, clearForm, sendPageSearchParamsByForm} from './for
 import {chooseTokenFromDropdown, searchForTokenAddress} from './search'
 import {toggleEmptyBalances} from '../table/rows/rows'
 import {loadTable} from '../table/orders'
+import {clearLocalStorageCoins} from '../../utils/coinfeed'
 
 export default function formEvents(chainIdSelect) {
    document.querySelector('#checkBtn').addEventListener('click', loadTable)
@@ -17,8 +18,6 @@ export default function formEvents(chainIdSelect) {
    chainIdSelect.addEventListener('change', changeChainLogo)
    document.querySelector('#sendPageSearchParams').addEventListener('click', sendPageSearchParamsByForm)
    document.querySelector('#clearForm').addEventListener('click', clearForm)
-   document.querySelector('#clearLocalStorage').addEventListener('click', function() {
-      localStorage.clear()
-   })
+   document.querySelector('#clearLocalStorage').addEventListener('click', clearLocalStorageCoins)
    document.querySelector('#popEmptyBalances').addEventListener('click', toggleEmptyBalances)
 }

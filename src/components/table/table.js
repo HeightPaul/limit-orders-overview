@@ -4,6 +4,7 @@ import {maker, asset, orderRates, prices, currentRates, updateNumberColors} from
 import expiration from '../../contracts/orders/expiration'
 import getTokensInfo from '../../contracts/tokenInfo'
 import {dropdownHandlers} from './head/wallets'
+import {getEmptyRows, getShowEmpty, updateShowingEmptyBalances} from './rows/rows'
 
 async function tableHtml(orders, chain, chainId) {
    const tokensInfo = await getTokensInfo(orders, chain)
@@ -58,6 +59,7 @@ function tableEvents() {
    const observer = new MutationObserver(function(mutations) {
       mutations.forEach(function() {
          updateNumberColors()
+         updateShowingEmptyBalances(getEmptyRows(), getShowEmpty(document.querySelector('#popEmptyBalances')))
       })
    })
    observer.observe(ordersSection, {

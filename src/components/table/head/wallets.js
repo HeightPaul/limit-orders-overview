@@ -27,6 +27,7 @@ function dropdownHandlers(event) {
    if (event.target.tagName === 'A') {
       return
    }
+
    const pin = event.target.closest('[data-pin]')
    if (pin) {
       const searchWalletColumn = document.querySelector('[data-columns="[0]"]')
