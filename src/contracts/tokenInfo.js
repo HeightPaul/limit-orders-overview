@@ -42,7 +42,7 @@ async function convertedFromAbi(address, provider, chainId) {
    } catch (error) {
       const apiTokens = await searchTokensLabelsApi(chainId, address)
       hasError = true
-      symbol = apiTokens[0].symbol ?? ERROR_MSG
+      symbol = apiTokens[0]?.symbol ?? ERROR_MSG
    }
 
    let name

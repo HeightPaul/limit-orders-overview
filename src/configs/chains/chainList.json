@@ -14,6 +14,13 @@
       "scanUrl": "https://optimistic.etherscan.io",
       "rpcUrl": "https://1rpc.io/op"
    },
+   "56": {
+      "id": 56,
+      "name": "binance-smart-chain",
+      "publicName": "Binance Smart Chain",
+      "scanUrl": "https://bscscan.com/",
+      "rpcUrl": "https://binance.llamarpc.com"
+   },
    "100": {
       "id": 100,
       "name": "gnosis",

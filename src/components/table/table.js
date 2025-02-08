@@ -10,7 +10,7 @@ function tableHtml(orders, tokensInfo, chain) {
    <table class="table table-striped table-dark" id="ordersTable">
       <thead>
          <tr>
-            <th scope="col">Address|Balance</th>
+            <th scope="col">Wallet Balance</th>
             <th scope="col">Sell</th>
             <th scope="col">Buy</span></th>
             <th scope="col">Rates</th>
