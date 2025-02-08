@@ -47,6 +47,7 @@ function clearForm() {
    document.querySelectorAll('.form-control').forEach(field => {
       field.value = ''
    })
+   history.pushState({}, document.title, location.pathname)
 }
 
 export {fillFormBySearchParams, sendPageSearchParamsByForm, clearForm, changeOnAllAddresses}

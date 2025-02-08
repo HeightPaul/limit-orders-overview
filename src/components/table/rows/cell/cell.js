@@ -2,13 +2,14 @@ import {formatUnits} from 'ethers'
 import getHsl from '../../../../utils/coloring'
 
 const COINGECKO_ICON_URL = 'https://avatars.githubusercontent.com/u/7111837?s=280&v=4'
+const COINGECKO_PRICE_URL = 'https://www.coingecko.com/en/coins'
 
 function maker(maker, balance, chainScanUrl, tokenInfo) {
    return `
       <td>
          ${colorWallet(maker, chainScanUrl, 30)}
          <div>
-            <span class="balanceAmount">${parseFloat(parseFloat(formatUnits(balance, tokenInfo.decimals)).toFixed(8))}</span>
+            <span class="balanceAmount">${getFormattedDecimals(balance, tokenInfo.decimals)}</span>
             <span class="text-light">${tokenInfo.symbol}</span>
          </div>
       </td>
@@ -25,8 +26,13 @@ function asset(address, amount, chain, tokenInfo) {
          <div class="d-flex flex-wrap">
             <div><a target="_blank" href="${chain.scanUrl}/address/${address}"><img class="tokenIcon m-1 ${tokenInfo.image.isFilled ? '' : 'grayscale'}" src="${tokenInfo.image.url}" alt="CT"/></a></div>
             <div>
-               <div><a target="_blank" href="${chain.scanUrl}/address/${address}" class="text-decoration-none text-light">${tokenInfo.symbol}</a></div>
-               <div class="text-secondary">${parseFloat(parseFloat(formatUnits(amount, tokenInfo.decimals)).toFixed(8))}</div>
+               <div><a target="_blank" href="${chain.scanUrl}/address/${address}"
+                  class="text-decoration-none text-light"
+                  ${tokenInfo.hasError ? 'title="Try to narrow down the search by tokens and wallet or change RPC and batch size."' : ''}>
+                  ${tokenInfo.symbol} ${tokenInfo.hasError ? '*': ''}
+               </a>
+               </div>
+               <div class="text-secondary">${getFormattedDecimals(amount, tokenInfo.decimals)}</div>
             </div>
          </div>
       </td>
@@ -34,8 +40,14 @@ function asset(address, amount, chain, tokenInfo) {
 }
 
 function orderRates(order, tokensInfo) {
-   const formattedMakerAmount = parseFloat(formatUnits(order.data.makingAmount, tokensInfo[order.data.makerAsset].decimals))
-   const formattedTakerAmount = parseFloat(formatUnits(order.data.takingAmount, tokensInfo[order.data.takerAsset].decimals))
+   const makerDecimals = tokensInfo[order.data.makerAsset].decimals
+   const takerDecimals = tokensInfo[order.data.takerAsset].decimals
+   if (typeof makerDecimals === 'string' || typeof takerDecimals === 'string') {
+      return `<td>${makerDecimals} - ${takerDecimals}</td>`
+   }
+
+   const formattedMakerAmount = parseFloat(formatUnits(order.data.makingAmount, makerDecimals))
+   const formattedTakerAmount = parseFloat(formatUnits(order.data.takingAmount, takerDecimals))
    return `
       <td>
          <div>
@@ -50,7 +62,7 @@ function prices(tokenInfo) {
    return `
       <td>${tokenInfo.current_price ? `
          <span class="text-nowrap">
-            <a target="_blank" href="https://www.coingecko.com/en/coins/${tokenInfo.price_id}"><img class="coingeckoIcon" src="${COINGECKO_ICON_URL}"/></a>
+            <a target="_blank" href="${COINGECKO_PRICE_URL}/${tokenInfo.price_id}"><img class="coingeckoIcon" src="${COINGECKO_ICON_URL}"/></a>
             $${parseFloat(tokenInfo.current_price.toFixed(8))}` : ''}
          </span>
       </td>
@@ -80,6 +92,10 @@ function updateNumberColors() {
    `).forEach(elem => {
       elem.className = elem.innerText.includes('-') ? 'text-danger' : 'text-success'
    })
+}
+
+function getFormattedDecimals(balance, decimals) {
+   return typeof decimals === 'string' ? decimals : parseFloat(parseFloat(formatUnits(balance, decimals)).toFixed(8))
 }
 
 export {maker, colorWallet, asset, orderRates, prices, currentRates, updateNumberColors}

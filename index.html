@@ -19,7 +19,7 @@
             <img src="https://app.1inch.io/assets/images/network-logos/ethereum-transparent.svg#ethereum" id="chainImg" alt="Chain">
          </div>
          <div>
-            <form class="row justify-content-center">
+            <form class="row justify-content-center" id="searchForm">
                <div class="col-md-4">
                   <div class="form-group">
                      <label class="text-center m-1" for="makerAsset">Sell:</label>
@@ -33,7 +33,7 @@
                   </div>
                   <div class="form-group d-flex gap-2">
                      <div class="w-100">
-                        <label class="text-center m-1" for="rpcUrl">RPC: <span class="text-danger">*</span> <a class="text-warning text-decoration-none" href="https://chainlist.org/">Options</a></label>
+                        <label class="text-center m-1" for="rpcUrl">RPC: <span class="text-danger">*</span> <a class="text-warning text-decoration-none" href="https://chainlist.org/" target="_blank">Options</a></label>
                         <input type="text" id="rpcUrl" class="form-control w-100 m-1" placeholder="https://..." required>
                      </div>
                      <div>
@@ -47,7 +47,7 @@
                         <label class="form-check-label" for="allAddresses">All Orders <span class="text-danger">*</span></label>
                      </span>
                      <span id="walletAddressGroup">
-                        <label class="text-center m-1" for="walletAddress">| Address: <span class="text-danger">*</span></label>
+                        <label class="text-center m-1" for="walletAddress">| Wallet: <span class="text-danger">*</span></label>
                         <input type="text" id="walletAddress" class="form-control w-100 m-1" placeholder="0x...">
                      </span>
                   </div>
@@ -55,12 +55,12 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label class="text-center m-1" for="chainId">Chain: <span class="text-danger">*</span></label>
-                     <select class="form-control m-1" id="chainId">
+                     <select class="form-control m-1" id="chainId" required>
                      </select>
                   </div>
                   <div class="form-group">
                      <label class="text-center m-1" for="appVersions">App Version: <span class="text-danger">*</span></label>
-                     <select class="form-control m-1" id="appVersions">
+                     <select class="form-control m-1" id="appVersions" required>
                         <option value="2.0">2.0</option>
                         <option value="3.0">3.0</option>
                         <option value="4.0" selected>4.0</option>
@@ -68,7 +68,7 @@
                   </div>
                   <div class="form-group">
                      <label class="text-center m-1" for="statuses">Statuses: <span class="text-danger">*</span></label>
-                     <select multiple class="form-control m-1" id="statuses">
+                     <select multiple class="form-control m-1" id="statuses" required>
                         <option value="1" selected>Valid</option>
                         <option value="2" selected title="Cannot be fully filled">Temporary Invalid</option>
                         <option value="3">Invalid</option>
@@ -76,7 +76,7 @@
                   </div>
                   <div class="col-md text-center">
                      <span id="ordersCount"></span>
-                     <button type="button" id="checkBtn" class="btn btn-primary m-2" title="Check it out up to 100!">👀</button>
+                     <button type="submit" class="btn btn-primary m-2" title="Check it out up to 100!">👀</button>
                      <button type="button" id="sendPageSearchParams" class="btn btn-primary m-2" title="Bookmark friendly!">🔖</button>
                      <button type="button" id="clearForm" class="btn btn-primary m-2" title="Sweep the fields!">🧹</button>
                      <button type="button" id="clearLocalStorage" class="btn btn-primary m-2" title="Sweep LocalStorage from coins' IDs!">💨</button>

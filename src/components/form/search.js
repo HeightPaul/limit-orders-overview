@@ -19,7 +19,7 @@ function searchForTokenAddress(event) {
 
 const debouncedSearch = debounce(async function(assetSelect, value) {
    const chainId = getValue('chainId')
-   const tokens = await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${value}`)).json()
+   const tokens = await searchTokensLabelsApi(chainId, value)
    assetSelect.innerHTML = tokens.length ? await getTokensHtml(tokens, chains[chainId]) : '<div class="ms-2">No results</div>'
 })
 
@@ -50,4 +50,8 @@ async function getTokensHtml(tokens, chain) {
    }))).join('<li><hr class="dropdown-divider"></li>')
 }
 
-export {searchForTokenAddress, chooseTokenFromDropdown}
+async function searchTokensLabelsApi(chainId, value) {
+   return await (await fetch(`${TOKENS_URL}/${chainId}/search?query=${value}`)).json()
+}
+
+export {searchForTokenAddress, chooseTokenFromDropdown, searchTokensLabelsApi}

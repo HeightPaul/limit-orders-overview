@@ -6,7 +6,10 @@ import {loadTable} from '../table/orders'
 import {clearLocalStorageCoins} from '../../utils/coinfeed'
 
 export default function formEvents(chainIdSelect) {
-   document.querySelector('#checkBtn').addEventListener('click', loadTable)
+   document.querySelector('#searchForm').addEventListener('submit', (event) => {
+      event.preventDefault()
+      loadTable()
+   })
    document.querySelectorAll('[data-input]').forEach(assetInput => {
       assetInput.addEventListener('input', searchForTokenAddress)
       assetInput.addEventListener('click', searchForTokenAddress)
