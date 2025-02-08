@@ -4,9 +4,9 @@ import imageUrl from '../utils/imageUrl'
 
 export const ERROR_MSG = 'Error!'
 
-export default async function getTokensInfo(orders, chain) {
+export default async function getTokensInfo(orders, chain, rpcUrl, batchMaxCount) {
    try {
-      const provider = new JsonRpcProvider(chain.rpcUrl)
+      const provider = new JsonRpcProvider(rpcUrl, chain.id, {batchMaxCount: batchMaxCount})
       const addresses = uniqueTokens(orders)
       const tokens = await Promise.all(addresses.map(async(address) => await convertedFromAbi(address, provider)))
       const priceActions = await fetchLatestPriceActions(await searchCoinIds(tokens))

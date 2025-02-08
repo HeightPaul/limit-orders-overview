@@ -7,6 +7,8 @@ function fillFormBySearchParams() {
    fillInput(urlParams, 'makerAsset')
    fillInput(urlParams, 'takerAsset')
    fillSelectedValues(urlParams, 'chainId')
+   fillInput(urlParams, 'rpcUrl')
+   fillInput(urlParams, 'maxBatchSize')
    fillSelectedValues(urlParams, 'statuses')
    fillSelectedValues(urlParams, 'appVersions')
 }
@@ -34,6 +36,8 @@ function sendPageSearchParamsByForm() {
    setUrlParam(urlParams, 'takerAsset')
    setUrlParam(urlParams, 'walletAddress')
    setUrlParam(urlParams, 'chainId')
+   setUrlParam(urlParams, 'rpcUrl')
+   setUrlParam(urlParams, 'maxBatchSize')
    urlParams.set('statuses', JSON.stringify(getSelectedValues(document.querySelector('#statuses').options)))
    urlParams.set('appVersions', JSON.stringify(getSelectedValues(document.querySelector('#appVersions').options)))
    window.history.pushState(null, null, `?${urlParams}`)

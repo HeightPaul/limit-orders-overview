@@ -31,8 +31,18 @@
                      <input type="text" id="takerAsset" class="form-control w-100 m-1" data-input="takerAssetDropdown" placeholder="Search token...">
                      <ul id="takerAssetDropdown" class="dropdown-menu dropdown-menu-dark dataDropdown" data-dropdownasset="takerAsset"></ul>
                   </div>
+                  <div class="form-group d-flex gap-2">
+                     <div class="w-100">
+                        <label class="text-center m-1" for="rpcUrl">RPC: <span class="text-danger">*</span> <a class="text-warning text-decoration-none" href="https://chainlist.org/">Options</a></label>
+                        <input type="text" id="rpcUrl" class="form-control w-100 m-1" placeholder="https://..." required>
+                     </div>
+                     <div>
+                        <label class="text-center m-1" for="maxBatchSize">Batch Size: <span class="text-danger">*</span></label>
+                        <input type="number" id="maxBatchSize" class="form-control w-100 m-1" value="20" required>
+                     </div>
+                  </div>
                   <div class="form-group">
-                     <span>
+                     <span class="m-1">
                         <input class="form-check-input ml-2" type="checkbox" id="allAddresses">
                         <label class="form-check-label" for="allAddresses">All Orders <span class="text-danger">*</span></label>
                      </span>
@@ -57,7 +67,7 @@
                      </select>
                   </div>
                   <div class="form-group">
-                     <label class="text-center m-1" for="statuses">Statuses:</label>
+                     <label class="text-center m-1" for="statuses">Statuses: <span class="text-danger">*</span></label>
                      <select multiple class="form-control m-1" id="statuses">
                         <option value="1" selected>Valid</option>
                         <option value="2" selected title="Cannot be fully filled">Temporary Invalid</option>

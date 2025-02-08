@@ -37,7 +37,7 @@ function chooseTokenFromDropdown(event) {
 
 async function getTokensHtml(tokens, chain) {
    return (await Promise.all(tokens.map(async token => {
-      const image = await imageUrl(token.address, chain)
+      const image = await imageUrl(token.address, chain.name)
       return `
          <li class="dropdown-item d-flex flex-wrap">
             <div><img class="tokenIcon m-1 me-2 ${image.isFilled ? '' : 'grayscale'}" src="${image.url}" alt="CT"/></div>

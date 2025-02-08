@@ -1,6 +1,6 @@
 import {loadTable} from './components/table/orders'
 import {fillFormBySearchParams} from './components/form/form'
-import {loadChainIdSelect, loadChainLogo} from './configs/chains/chainConfigs'
+import {loadChainIdSelect, loadRpcUrlInput, loadChainLogo} from './configs/chains/chainConfigs'
 import formEvents from './components/form/formEvents'
 import {tableEvents} from './components/table/table'
 
@@ -11,8 +11,10 @@ tableEvents()
 
 // Fillers
 loadChainIdSelect(chainIdSelect)
+loadRpcUrlInput(chainIdSelect.value)
 fillFormBySearchParams()
 loadTable()
 if (location.search) {
+   loadRpcUrlInput(chainIdSelect.value)
    loadChainLogo(chainIdSelect.value)
 }

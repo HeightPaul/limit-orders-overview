@@ -1,4 +1,4 @@
-import {changeChainLogo} from '../../configs/chains/chainConfigs'
+import {changeChain} from '../../configs/chains/chainConfigs'
 import {changeOnAllAddresses, clearForm, sendPageSearchParamsByForm} from './form'
 import {chooseTokenFromDropdown, searchForTokenAddress} from './search'
 import {toggleEmptyBalances} from '../table/rows/rows'
@@ -15,7 +15,7 @@ export default function formEvents(chainIdSelect) {
       assetSelect.addEventListener('click', chooseTokenFromDropdown)
    })
    document.querySelector('#allAddresses').addEventListener('change', changeOnAllAddresses)
-   chainIdSelect.addEventListener('change', changeChainLogo)
+   chainIdSelect.addEventListener('change', changeChain)
    document.querySelector('#sendPageSearchParams').addEventListener('click', sendPageSearchParamsByForm)
    document.querySelector('#clearForm').addEventListener('click', clearForm)
    document.querySelector('#clearLocalStorage').addEventListener('click', clearLocalStorageCoins)

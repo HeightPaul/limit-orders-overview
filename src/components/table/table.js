@@ -2,12 +2,10 @@
 import {getFormattedDateTime} from '../../configs/configs'
 import {maker, asset, orderRates, prices, currentRates, updateNumberColors} from './rows/cell/cell'
 import expiration from '../../contracts/orders/expiration'
-import getTokensInfo from '../../contracts/tokenInfo'
 import {dropdownHandlers} from './head/wallets'
 import {getEmptyRows, getShowEmpty, updateShowingEmptyBalances} from './rows/rows'
 
-async function tableHtml(orders, chain, chainId) {
-   const tokensInfo = await getTokensInfo(orders, chain)
+function tableHtml(orders, tokensInfo, chain) {
    return `
    <table class="table table-striped table-dark" id="ordersTable">
       <thead>
@@ -28,8 +26,8 @@ async function tableHtml(orders, chain, chainId) {
          </tr>
       </thead>
       <tbody>
-      ${(await Promise.all(orders.map(order => {
-      const expire = parseInt(expiration(order.data, chainId))
+      ${((orders.map(order => {
+      const expire = parseInt(expiration(order.data, chain.id))
       const makerTokenInfo = tokensInfo[order.data.makerAsset]
       const takerTokenInfo = tokensInfo[order.data.takerAsset]
       return `

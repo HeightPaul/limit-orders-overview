@@ -1,54 +1,63 @@
 
 {
    "1": {
+      "id": 1,
       "name": "ethereum",
       "publicName": "Ethereum",
       "scanUrl": "https://etherscan.io",
       "rpcUrl": "https://eth.llamarpc.com"
    },
    "10": {
+      "id": 10,
       "name": "optimism",
       "publicName": "Optimism",
       "scanUrl": "https://optimistic.etherscan.io",
       "rpcUrl": "https://1rpc.io/op"
    },
    "100": {
+      "id": 100,
       "name": "gnosis",
       "publicName": "Gnosis",
       "scanUrl": "https://gnosisscan.io",
       "rpcUrl": "https://gnosis.drpc.org"
    },
    "137": {
+      "id": 137,
       "name": "polygon",
       "publicName": "Polygon",
       "scanUrl": "https://polygonscan.com",
       "rpcUrl": "https://1rpc.io/matic"
    },
    "250": {
+      "id": 250,
       "name": "fantom",
       "publicName": "Fantom",
       "scanUrl": "https://ftmscan.com/",
       "rpcUrl": "https://endpoints.omniatech.io/v1/fantom/mainnet/public"
    },
    "324": {
+      "id": 324,
       "name": "zksync-era",
       "publicName": "ZKSync Era",
       "scanUrl": "https://explorer.zksync.io",
       "rpcUrl": "https://zksync.drpc.org"
    },
    "8453": {
+      "id": 8453,
       "name": "base",
       "publicName": "Base",
       "scanUrl": "https://basescan.org",
       "rpcUrl": "https://endpoints.omniatech.io/v1/base/mainnet/public"
    },
    "42161": {
+      "id": 42161,
       "name": "arbitrum",
       "publicName": "Arbitrum",
       "scanUrl": "https://arbiscan.io",
       "rpcUrl": "https://arbitrum.llamarpc.com"
    },
    "43114": {
+      "id": 43114,
       "name": "avalanche",
       "publicName": "Avalanche",
       "scanUrl": "https://snowtrace.io",

@@ -10,16 +10,25 @@ function loadChainIdSelect(chainIdSelect) {
    chainIdSelect.selectedIndex = ETH_INDEX
 }
 
-function changeChainLogo(event) {
+function changeChain(event) {
+   loadRpcUrlInput(event.target.value, true)
    loadChainLogo(event.target.value)
 }
 
-function loadChainLogo(id) {
-   if (id) {
-      const chain = chains[id]
-      const chainImg = document.querySelector('#chainImg')
-      chainImg.src = `${CHAIN_LOGO_URL}/${chain.name}-transparent.svg#${chain.name}`
+function loadRpcUrlInput(id, chainUpdate = false) {
+   const rpcUrlInput = document.querySelector('#rpcUrl')
+   if (chainUpdate) {
+      rpcUrlInput.value = chains[id].rpcUrl
+      return
    }
+
+   rpcUrlInput.value = rpcUrlInput.value ? rpcUrlInput.value : chains[id].rpcUrl
 }
 
-export {loadChainIdSelect, changeChainLogo, loadChainLogo}
+function loadChainLogo(id) {
+   const chain = chains[id]
+   const chainImg = document.querySelector('#chainImg')
+   chainImg.src = `${CHAIN_LOGO_URL}/${chain.name}.svg`
+}
+
+export {loadChainIdSelect, loadRpcUrlInput, changeChain, loadChainLogo}

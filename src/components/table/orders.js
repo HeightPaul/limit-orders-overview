@@ -5,17 +5,22 @@ import chains from '../../configs/chains/chainList.json'
 import {getDataTable} from './interactive.js'
 import {loadWalletDropdown} from './head/wallets.js'
 import {tableHtml} from './table.js'
+import getTokensInfo from '../../contracts/tokenInfo.js'
 
 export async function loadTable() {
    const animation = document.querySelector('#animation')
    const ordersSection = document.querySelector('#ordersSection')
    const ordersCount = document.querySelector('#ordersCount')
    const popEmptyBalancesBtn = document.querySelector('#popEmptyBalances')
+   const rpcUrl = document.querySelector('#rpcUrl')
+   const maxBatchSize = document.querySelector('#maxBatchSize')
+   const batchError = document.querySelector('#maxBatchSize')
 
    animation.innerHTML = loadingHtml()
    ordersSection.textContent = ordersCount.textContent = ''
    popEmptyBalancesBtn.style.display = 'none'
    popEmptyBalancesBtn.innerText = '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
+   batchError.textContent = ''
 
    const {response, chainId} = await getOrdersApi(ordersSection, animation)
    if (!response.ok) {
@@ -26,7 +31,9 @@ export async function loadTable() {
    }
    const ordersApi = await response.json()
    const chain = chains[chainId]
-   ordersSection.innerHTML = await tableHtml(ordersApi, chain, chainId)
+
+   const tokensInfo = await getTokensInfo(ordersApi, chain, rpcUrl.value, maxBatchSize.value)
+   ordersSection.innerHTML = tableHtml(ordersApi, tokensInfo, chain)
    animation.innerHTML = ''
    const ordersDataTable = getDataTable(popEmptyBalancesBtn)
    ordersCount.textContent = `Found: ${ordersApi.length}${ordersDataTable.emptyRowsLength ? ` | Empty: ${ordersDataTable.emptyRowsLength}` : ''}`
