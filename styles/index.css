@@ -37,11 +37,6 @@
    width: 5rem;
 }
 
-#allAddresses{
-   height: 1.3rem;
-   width: 1.3rem;
-}
-
 .grayscale{
    filter: grayscale(100%);
 }

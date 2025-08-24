@@ -23,6 +23,7 @@ function fillWalletAddress(urlParams) {
 }
 
 function changeOnAllAddresses() {
+   document.querySelector('#allOrdersRequirementStatus').classList.toggle('d-none')
    document.querySelector('#walletAddressGroup').classList.toggle('d-none')
    document.querySelector('#walletAddress').value = ''
 }

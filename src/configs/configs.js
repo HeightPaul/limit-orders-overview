@@ -1,10 +1,19 @@
-const ONE_INCH_API_DOMAIN = 'https://limit-orders.1inch.io'
+const ONE_INCH_API_DOMAIN = 'https://proxy-app.1inch.io/v2.0/orderbook/'
 const V4 = '4.0'
 
 function getSelectedValues(htmlOptions) {
    return Array.from(htmlOptions)
       .filter(option => option.selected)
       .map(option => option.value)
+}
+
+async function getLimitOrders(bearerToken, fields) {
+   return await fetch(getLimitOrdersUrl(fields), {
+      'headers': {
+         'authorization': `Bearer ${bearerToken}`
+      },
+      'referrer': 'https://app.1inch.io/'
+   })
 }
 
 function getLimitOrdersUrl(fields) {
@@ -31,4 +40,4 @@ function getFormattedDateTime(utcDateTime) {
    return new Date(utcDateTime).toLocaleDateString('en-GB', options)
 }
 
-export {getSelectedValues, getLimitOrdersUrl, getFormattedDateTime}
+export {getSelectedValues, getLimitOrders, getFormattedDateTime}

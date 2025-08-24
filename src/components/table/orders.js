@@ -1,6 +1,6 @@
 import {getValue} from '../form/fill.js'
 import loadingHtml from '../form/loading.js'
-import {getSelectedValues, getLimitOrdersUrl} from '../../configs/configs.js'
+import {getSelectedValues, getLimitOrders} from '../../configs/configs.js'
 import chains from '../../configs/chains/chainList.json'
 import {getDataTable} from './interactive.js'
 import {loadWalletDropdown} from './head/wallets.js'
@@ -41,6 +41,11 @@ export async function loadTable() {
 }
 
 async function getOrdersApi() {
+   const token = localStorage.getItem('1inchToken')
+   if (token) {
+      document.querySelector('#oneInchToken').value = token
+   }
+
    const fields = {
       makerAsset: getValue('makerAsset'),
       takerAsset: getValue('takerAsset'),
@@ -49,7 +54,9 @@ async function getOrdersApi() {
       statuses: getSelectedValues(document.querySelector('#statuses').options),
       appVersions: getSelectedValues(document.querySelector('#appVersions').options),
    }
-   const response = await fetch(getLimitOrdersUrl(fields))
+
+   const response = await getLimitOrders(localStorage.getItem('1inchToken'), fields)
+
    return {
       response: response,
       chainId: fields.chainId,
