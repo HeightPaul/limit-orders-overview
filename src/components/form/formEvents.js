@@ -1,5 +1,5 @@
 import {changeChain} from '../../configs/chains/chainConfigs'
-import {changeOnAllAddresses, clearForm, sendPageSearchParamsByForm} from './form'
+import {changeOnAllAddresses, clearForm, sendPageSearchParamsByForm, swapAssets} from './form'
 import {chooseTokenFromDropdown, searchForTokenAddress} from './search'
 import {toggleEmptyBalances} from '../table/rows/rows'
 import {loadTable} from '../table/orders'
@@ -24,5 +24,6 @@ export default function formEvents(chainIdSelect) {
    document.querySelector('#clearForm').addEventListener('click', clearForm)
    document.querySelector('#clearLocalStorage').addEventListener('click', clearLocalStorageCoins)
    document.querySelector('#popEmptyBalances').addEventListener('click', toggleEmptyBalances)
+   document.querySelector('#swapAssets').addEventListener('click', swapAssets)
    configEvents()
 }

@@ -5,7 +5,7 @@ function loadWalletDropdown(orders, chainScanUrl) {
    const searchColumn = document.querySelector('[data-columns="[0]"]')
    searchColumn.parentElement.classList.add('d-flex')
    searchColumn.insertAdjacentHTML('beforebegin', `
-      <input type="button" id="openWalletDropdown" class="btn btn-primary me-3" value="👛" title="Wallets"/>
+      <input type="button" id="openWalletDropdown" class="btn btn-outline-primary me-3" value="👛" title="Wallets"/>
       <div class="dropend">
          <ul id="walletDropdown" class="dropdown-menu dropdown-menu-dark dataDropdown">
          ${uniqueWallets.map(maker => `

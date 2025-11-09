@@ -51,4 +51,12 @@ function clearForm() {
    history.pushState({}, document.title, location.pathname)
 }
 
-export {fillFormBySearchParams, sendPageSearchParamsByForm, clearForm, changeOnAllAddresses}
+function swapAssets() {
+   const makerInput = document.querySelector('#makerAsset')
+   const takerInput = document.querySelector('#takerAsset')
+   if (makerInput && takerInput) {
+      [makerInput.value, takerInput.value] = [takerInput.value, makerInput.value]
+   }
+}
+
+export {fillFormBySearchParams, changeOnAllAddresses, sendPageSearchParamsByForm, clearForm, swapAssets}

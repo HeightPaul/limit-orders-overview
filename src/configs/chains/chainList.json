@@ -44,8 +44,8 @@
    },
    "324": {
       "id": 324,
-      "name": "zksync-era",
-      "publicName": "ZKSync Era",
+      "name": "zksync",
+      "publicName": "ZKSync",
       "scanUrl": "https://explorer.zksync.io",
       "rpcUrl": "https://zksync.drpc.org"
    },
