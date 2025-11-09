@@ -1,7 +1,7 @@
 import chains from './chainList.json'
 
 const ETH_INDEX = 0
-const CHAIN_LOGO_URL = 'https://app.1inch.io/assets/images/network-logos'
+const CHAIN_LOGO_URL = 'https://storage.googleapis.com/zapper-fi-assets/networks'
 
 function loadChainIdSelect(chainIdSelect) {
    chainIdSelect.innerHTML = Object.entries(chains)
@@ -28,7 +28,7 @@ function loadRpcUrlInput(id, chainUpdate = false) {
 function loadChainLogo(id) {
    const chain = chains[id]
    const chainImg = document.querySelector('#chainImg')
-   chainImg.src = `${CHAIN_LOGO_URL}/${chain.name}.svg`
+   chainImg.src = `${CHAIN_LOGO_URL}/${chain.name}-icon.png`
 }
 
 export {loadChainIdSelect, loadRpcUrlInput, changeChain, loadChainLogo}
